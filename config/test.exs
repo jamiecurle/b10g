@@ -12,8 +12,5 @@ config :logger, level: :warn
 # Configure your database
 config :b10g, B10g.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "b10g_test",
-  hostname: "localhost",
+  url: System.get_env("DATABASE_URL") <> "b10g_test",
   pool: Ecto.Adapters.SQL.Sandbox
