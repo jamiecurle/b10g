@@ -10,4 +10,7 @@ node("master"){
         sh "npm install"
     }
 
+    stage("test"){
+        sh "mix test"
+    }
 }
