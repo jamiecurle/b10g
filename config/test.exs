@@ -9,8 +9,11 @@ config :b10g, B10g.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+
+
+
 # Configure your database
 config :b10g, B10g.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL") <> "b10g_test",
+  url:  (System.get_env("DATABASE_URL") || "postgres://jcurle:@localhost:5432/") <> "b10g_test",
   pool: Ecto.Adapters.SQL.Sandbox
