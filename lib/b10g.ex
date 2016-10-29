@@ -16,6 +16,16 @@ defmodule B10g do
       # worker(B10g.Worker, [arg1, arg2, arg3]),
     ]
 
+    children = case Mix.env do
+      :test ->
+        children
+      _ ->
+        children ++ [
+          worker(B10g.SiteServer, []),
+        ]
+     end
+
+
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: B10g.Supervisor]

@@ -21,6 +21,7 @@ defmodule B10g.ConnCase do
       use Phoenix.ConnTest
 
       alias B10g.Repo
+      alias B10g.Factory
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -39,6 +40,12 @@ defmodule B10g.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(B10g.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+
+
+		conn = Phoenix.ConnTest.build_conn()
+		{:ok, user} = B10g.Factory.create_user
+		{:ok, site} = B10g.Factory.create_site(%{user_id: user.id})
+
+    {:ok, conn: conn, user: user, site: site}
   end
 end
