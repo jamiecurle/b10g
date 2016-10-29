@@ -21,7 +21,7 @@ defmodule B10g do
         children
       _ ->
         children ++ [
-          worker(Blog.SiteServer, []),
+          worker(B10g.SiteServer, []),
         ]
      end
 
