@@ -12,7 +12,7 @@ defmodule B10g.User do
 
   def changeset(model, params \\ %{}) do
     model
-      |> cast(params, [:email, :name, :password, :conf, :domain])
+      |> cast(params, [:email, :name])
       |> validate_format(:email, ~r/@/)
       |> put_pass_hash()
   end

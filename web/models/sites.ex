@@ -11,7 +11,7 @@ defmodule B10g.Site do
     timestamps()
   end
 
-  @required_fields ~w(cname)
+  @required_fields ~w(cname user_id)
   @optional_fields ~w(config)
 
   def changeset(model, params \\ %{}) do

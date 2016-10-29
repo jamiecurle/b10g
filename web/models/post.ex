@@ -1,12 +1,12 @@
 # todo: later on put in status as a enum CREATE, DRAFT, PUBLISHED, ARCHIVE
 
-defmodule B10g.Blog do
+defmodule B10g.Post do
   use B10g.Web, :model
   use Timex.Ecto.Timestamps
 
 
   @derive {Poison.Encoder, only: [:id, :title, :body, :string, :markdown, :slug, :hidden]}
-  schema "blogs" do
+  schema "posts" do
     field :title, :string
     field :body, :string
     field :slug, :string
@@ -18,11 +18,11 @@ defmodule B10g.Blog do
   end
 
   @required_fields ~w(title body slug markdown user_id)
-  @optional_fields ~w(hidden inserted_at updated_at)
+  @optional_fields ~w(inserted_at updated_at)
 
   def create_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(user_id hidden), @optional_fields)
+    |> cast(params, ~w(user_id ), @optional_fields)
   end
 
   @doc """
