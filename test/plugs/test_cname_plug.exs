@@ -6,18 +6,37 @@ defmodule B10g.CnamePlugTest do
     :ok
   end
 
-  test "GET blog with host", %{site: site} do
+  test "GET blog with existing cname", %{site: site} do
 
 		# build conn with host
   	conn = build_conn
   					|> Map.put(:host, site.cname)
-  					#|> Map.put(:host, "asdadas.asdsadasd.asd")
 
-		# get the index and we get the x-b10g-host header
+		# get the index and we get the site in the private
     conn = get(conn, "/")
-    IO.inspect conn.private[:site]
+
+    # site id matches
+    assert conn.private[:site].id == site.id
 
     # it was 200
     assert conn.status == 200
   end
+
+  test "GET blog with non-existant cname", _params do
+
+		# build conn with host
+  	conn = build_conn
+  					|> Map.put(:host, "baz.bar.foo")
+
+		# get the index and we get the site in the private
+    conn = get(conn, "/")
+
+    # conn private[:site] is :not_found
+    assert conn.private[:site] == :not_found
+
+    # but was still 200
+    assert conn.status == 200
+  end
+
+
 end

@@ -40,6 +40,8 @@ defmodule B10g.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(B10g.Repo, {:shared, self()})
     end
 
+
+
 		conn = Phoenix.ConnTest.build_conn()
 		{:ok, user} = B10g.Factory.create_user
 		{:ok, site} = B10g.Factory.create_site(%{user_id: user.id})
