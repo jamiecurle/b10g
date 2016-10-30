@@ -8,6 +8,7 @@ defmodule B10g.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug B10g.CnamePlug
+    plug B10g.UserPlug, repo: B10g.Repo
   end
 
   pipeline :api do

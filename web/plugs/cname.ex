@@ -4,6 +4,7 @@ defmodule B10g.CnamePlug do
   end
 
   def call(conn, _opts) do
+
     case GenServer.call(:siteserver, {:get, conn.host}) do
       {:ok, site} ->
         conn
