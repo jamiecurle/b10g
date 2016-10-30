@@ -5,7 +5,6 @@ defmodule B10g.AuthController do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   def login(conn, %{"email" => email, "password" => password}) do
-
     case _auth_with_username_and_password(conn, email, password, repo: Repo) do
       {:ok, conn} ->
         conn

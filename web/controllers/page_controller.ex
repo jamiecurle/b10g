@@ -5,8 +5,7 @@ defmodule B10g.PageController do
   plug :put_layout, "blog.html"
 
   def index(conn, _params) do
-    IO.inspect conn.private[:site]
-  	IO.inspect conn.assigns
+
     render conn, "index.html"
   end
 end
