@@ -27,6 +27,9 @@ defmodule B10g.AuthControllerTest do
     # good conn is wired to teh default user and thus, login will fail
     assert 200 == post(good_conn, url, %{email: "a@b.c", password: "househouse"}).status
 
+    # start and stop the GenServer again
+    GenServer.call(:siteserver, {:reload})
+
     # now make a conn for s2 and we can login without any issue
     u2_conn = build_conn |> Map.put(:host, s2.cname)
     assert 302 == post(u2_conn, url, %{email: "a@b.c", password: "househouse"}).status

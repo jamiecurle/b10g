@@ -20,6 +20,10 @@ defmodule B10g.SiteServer do
       {:ok, Repo.all(Site)}
   end
 
+  def handle_call({:reload}, _from, _sites) do
+      {:reply, :ok, Repo.all(Site)}
+  end
+
   def handle_call({:get, cname}, _from, sites) do
 		case Enum.filter(sites, fn(site)-> Map.get(site, :cname) == cname end) do
 			[site] ->

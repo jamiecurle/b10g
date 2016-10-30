@@ -25,6 +25,9 @@ defmodule B10g.ConnCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      alias B10g.Site
+      alias B10g.User
+      alias B10g.Post
 
       import B10g.Router.Helpers
 
