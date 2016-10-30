@@ -18,6 +18,9 @@ defmodule B10g.AuthControllerTest do
   end
 
 	# test no matching host is a 404
+	test "login to a host that is not found is 404", %{url: url} do
+
+	end
 
 	test "person A cannot login to person B's' blog", %{good_conn: good_conn, url: url} do
     # make a new site and person
