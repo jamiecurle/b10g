@@ -31,6 +31,9 @@ defmodule B10g.EditorControllerTest do
 
     # we now have one more post
     assert count + 1 == Repo.all(Post) |> Enum.count
+
+    # it redirected to editor
+    # TODO
   end
 
   test "GET UI and logged in is 200", %{url: url, good_conn: good_conn, user: user} do
