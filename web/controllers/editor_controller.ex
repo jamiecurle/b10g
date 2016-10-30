@@ -5,7 +5,8 @@ defmodule B10g.EditorController do
   plug B10g.AuthPlug
 
   def ui(conn, _params) do
+    cs =  
     conn
-    |> render("ui.html")
+    |> render("ui.html", cs: cs)
   end
 end
