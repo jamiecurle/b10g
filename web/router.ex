@@ -15,6 +15,14 @@ defmodule B10g.Router do
     plug :accepts, ["json"]
   end
 
+  # the editor
+  scope "/editor", B10g do
+    pipe_through :browser
+
+    get "/ui", EditorController, :ui
+
+  end
+
 	# the authentication views
   scope "/auth", B10g do
     pipe_through :browser
@@ -30,8 +38,4 @@ defmodule B10g.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", B10g do
-  #   pipe_through :api
-  # end
 end

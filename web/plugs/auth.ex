@@ -8,7 +8,7 @@ defmodule B10g.AuthPlug do
   end
 
   def call(conn, _opts) do
-    if Map.get(conn.assigns, "current_user") do
+    if Map.get(conn.assigns, :current_user) do
       conn
     else
       path = Enum.reduce(conn.path_info, "", fn(x, url)-> url <> "/" <> x end)
