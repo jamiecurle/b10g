@@ -18,7 +18,12 @@ defmodule B10g.AuthController do
   end
 
   def login(conn, _params) do
-    render(conn, "login.html")
+    case conn.assigns[:site] do
+      :not_found ->
+        conn |> put_status(:not_found)
+      _ ->
+       conn |> render("login.html")
+    end
   end
 
   #

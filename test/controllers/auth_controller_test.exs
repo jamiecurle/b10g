@@ -2,7 +2,6 @@ defmodule B10g.AuthControllerTest do
   use B10g.ConnCase
   alias B10g.Factory
 
-
   setup %{user: user, site: site, conn: conn} do
 		# start the site server
     B10g.SiteServer.start_link
@@ -17,9 +16,8 @@ defmodule B10g.AuthControllerTest do
     {:ok, user: user, site: site, good_conn: good_conn, bad_conn: conn, url: url}
   end
 
-	# test no matching host is a 404
 	test "login to a host that is not found is 404", %{url: url} do
-
+    assert 404 == get(build_conn, url).status
 	end
 
 	test "person A cannot login to person B's' blog", %{good_conn: good_conn, url: url} do
@@ -39,7 +37,6 @@ defmodule B10g.AuthControllerTest do
 
 	end
 
-
   test "POST /login/auth valid", %{good_conn: good_conn, url: url} do
     # there is already a user with the default credentials
     conn = post(good_conn, url, %{email: "foo@bar.baz", password: "househouse"})
@@ -51,8 +48,7 @@ defmodule B10g.AuthControllerTest do
     assert conn.status == 200
   end
 
-  test "GET /login/auth", %{conn: conn, url: url} do
-    conn = get(conn, url)
-    assert conn.status == 200
+  test "GET /login/auth", %{good_conn: good_conn, url: url, site: site} do
+    assert 200 == get(good_conn, url).status
   end
 end
