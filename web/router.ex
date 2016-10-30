@@ -18,6 +18,7 @@ defmodule B10g.Router do
   scope "/auth", B10g do
     pipe_through :browser
 
+    post "/login", AuthController, :login
     get "/login", AuthController, :login
   end
 
