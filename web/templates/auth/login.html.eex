@@ -1,0 +1,29 @@
+
+    <div class="center-block " style="width: 400px">
+      <div class="dashhead">
+        <div class="dashhead-titles">
+          <h6 class="dashhead-subtitle">b10g</h6>
+          <h3 class="dashhead-title">Login</h3>
+        </div>
+      </div>
+
+      <form action="#" method="post">
+
+        <div class="form-group">
+          <label class="" for="email">Email</label>
+          <input class="form-control" name="email" type="text" id="email">
+        </div>
+
+        <div class="form-group">
+          <label class="" for="password">password</label>
+         <input class="form-control" name="password" type="password" id="password">
+        </div>
+
+        <div class="form-group">
+          <input class="btn btn-primary-outline" type="submit" value="Submit">
+        </div>
+
+      </form>
+
+
+

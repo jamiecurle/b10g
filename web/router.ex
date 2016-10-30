@@ -14,8 +14,16 @@ defmodule B10g.Router do
     plug :accepts, ["json"]
   end
 
+	# the authentication views
+  scope "/auth", B10g do
+    pipe_through :browser
+
+    get "/login", AuthController, :login
+  end
+
+	# the blog views
   scope "/", B10g do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
