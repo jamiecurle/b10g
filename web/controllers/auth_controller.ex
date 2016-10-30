@@ -2,10 +2,12 @@ defmodule B10g.AuthController do
   use B10g.Web, :controller
   alias B10g.Repo
   alias B10g.User
+  alias B10g.Site
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Ecto.Query, only: [from: 2]
 
   def login(conn, %{"email" => email, "password" => password}) do
-    case _auth_with_username_and_password(conn, email, password, repo: Repo) do
+    case _auth_with_username_and_password(conn, email, password, conn.assigns[:site], repo: Repo) do
       {:ok, conn} ->
         conn
           |> redirect(to: page_path(conn, :index))
@@ -31,10 +33,25 @@ defmodule B10g.AuthController do
       |> configure_session(renew: true)
   end
 
-  defp _auth_with_username_and_password(conn, email, password, opts) do
+  defp _auth_with_username_and_password(conn, email, password, site, opts) when site == :not_found do
+    {:error, :not_found, conn}
+  end
+
+  defp _auth_with_username_and_password(conn, email, password, site, opts) do
     # get the repo and fetch matching user
     repo = Keyword.fetch!(opts, :repo)
-    user = repo.get_by(User, email: email)
+    site_id = site.id
+
+    # get the user that matches the current site id
+    q = from u in User,
+        inner_join: s in Site,
+        on: s.user_id == u.id,
+        where: u.email == ^email,
+        where: s.id == ^site_id,
+        where: s.user_id == u.id
+
+    # TODO - is there a better way to do this?
+    user = Repo.all(q) |> List.first
 
     # if user and pw checks out, auth, else error
     cond do
