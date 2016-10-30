@@ -16,7 +16,7 @@ defmodule B10g.CnamePlugTest do
     conn = get(conn, "/")
 
     # site id matches
-    assert conn.private[:site].id == site.id
+    assert conn.assigns[:site].id == site.id
 
     # it was 200
     assert conn.status == 200
@@ -32,7 +32,7 @@ defmodule B10g.CnamePlugTest do
     conn = get(conn, "/")
 
     # conn private[:site] is :not_found
-    assert conn.private[:site] == :not_found
+    assert conn.assigns[:site] == :not_found
 
     # but was still 200
     assert conn.status == 200

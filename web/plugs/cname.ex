@@ -4,13 +4,14 @@ defmodule B10g.CnamePlug do
   end
 
   def call(conn, _opts) do
+
     case GenServer.call(:siteserver, {:get, conn.host}) do
       {:ok, site} ->
         conn
-        |> put_private(:site, site)
+        |> assign(:site, site)
       {:error, _} ->
         conn
-        |> put_private(:site, :not_found)
+        |> assign(:site, :not_found)
     end
   end
 

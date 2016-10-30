@@ -8,14 +8,24 @@ defmodule B10g.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug B10g.CnamePlug
+    plug B10g.UserPlug, repo: B10g.Repo
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+	# the authentication views
+  scope "/auth", B10g do
+    pipe_through :browser
+
+    post "/login", AuthController, :login
+    get "/login", AuthController, :login
+  end
+
+	# the blog views
   scope "/", B10g do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
