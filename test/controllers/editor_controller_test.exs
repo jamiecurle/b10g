@@ -17,6 +17,22 @@ defmodule B10g.EditorControllerTest do
     {:ok, user: user, site: site, good_conn: good_conn, bad_conn: conn, url: url}
   end
 
+  test "/editor/create works as expected", %{good_conn: good_conn, user: user} do
+    # make url
+    url = editor_path(@endpoint, :create)
+
+    # get the post count
+    count = Repo.all(Post) |> Enum.count
+
+    # make the conn
+    conn = good_conn
+           |> assign(:current_user, user)
+           |> get(url)
+
+    # we now have one more post
+    assert count + 1 == Repo.all(Post) |> Enum.count
+  end
+
   test "GET UI and logged in is 200", %{url: url, good_conn: good_conn, user: user} do
     conn = good_conn
            |> assign(:current_user, user)
