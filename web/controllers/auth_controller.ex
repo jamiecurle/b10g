@@ -20,7 +20,9 @@ defmodule B10g.AuthController do
   def login(conn, _params) do
     case conn.assigns[:site] do
       :not_found ->
-        conn |> put_status(:not_found)
+        conn
+        |> put_status(:not_found)
+        |> render(B10g.ErrorView, "404.html")
       _ ->
        conn |> render("login.html")
     end
@@ -38,7 +40,7 @@ defmodule B10g.AuthController do
       |> configure_session(renew: true)
   end
 
-  defp _auth_with_username_and_password(conn, email, password, site, opts) when site == :not_found do
+  defp _auth_with_username_and_password(conn, _email, _password, site, _opts) when site == :not_found do
     {:error, :not_found, conn}
   end
 
@@ -56,7 +58,7 @@ defmodule B10g.AuthController do
         where: s.user_id == u.id
 
     # TODO - is there a better way to do this?
-    user = Repo.all(q) |> List.first
+    user = repo.all(q) |> List.first
 
     # if user and pw checks out, auth, else error
     cond do
