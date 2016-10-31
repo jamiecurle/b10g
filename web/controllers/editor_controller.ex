@@ -2,7 +2,7 @@ defmodule B10g.EditorController do
   use B10g.Web, :controller
   alias B10g.Post
 
-  plug :put_layout, "editor.html"
+  plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
   def create(conn, _params) do
@@ -19,8 +19,11 @@ defmodule B10g.EditorController do
 		# get post
 		post = Repo.get(Post, id)
 
+		# make a changeset
+		cs  = Post.changeset(post, %{})
+
 		# return the connection
     conn
-    |> render("ui.html", post: post)
+    |> render("ui.html", post: post, cs: cs)
   end
 end

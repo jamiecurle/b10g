@@ -26,6 +26,7 @@ defmodule B10g.EditorControllerTest do
     url: url}
   end
 
+	# TODO - ensure can only get posts that belong to the site
 
   test "/editor/create works as expected", %{good_conn: good_conn, user: user} do
     # make url
