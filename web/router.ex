@@ -20,7 +20,7 @@ defmodule B10g.Router do
     pipe_through :browser
 
     get "/create", EditorController, :create
-    get "/ui", EditorController, :ui
+    get "/ui/:id", EditorController, :ui
 
   end
 
