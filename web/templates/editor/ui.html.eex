@@ -13,7 +13,7 @@
 
 <div class="form-group">
   <%= label f, :markdown %>
-  <%= textarea f, :markdown, class: "form-control", style: "min-height: 600px" %>
+  <%= textarea f, :markdown, class: "form-control", style: "min-height: 400px" %>
 </div>
 
 
