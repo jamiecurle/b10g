@@ -32,9 +32,9 @@ defmodule B10g.EditorControllerTest do
     url = editor_path(@endpoint, :update)
 
 	  # post to the url
-	  conn = good_conn
-	  |> assign(:current_user, user)
-	  |> post(url, %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"})
+	  good_conn
+			|> assign(:current_user, user)
+			|> put(url, %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"})
 
     # get the post
     p = Repo.get(Post, post.id)

@@ -10,8 +10,6 @@ defmodule B10g.EditorController do
     post = Repo.get(Post, id)
           |> Repo.preload([:user])
 
-    IO.inspect title
-
     # make the params
     params = %{
       title: title,
@@ -19,9 +17,11 @@ defmodule B10g.EditorController do
       markdown: markdown
     }
 
-    # make the changeset
+    # make the changeset, it should work, so allow non working to blow up
     cs = Post.changeset(post, params)
-    {:ok, post2} = Repo.update(cs)
+    {:ok, _post} = Repo.update(cs)
+
+    # return the connection
     conn
   end
 

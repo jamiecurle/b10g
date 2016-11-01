@@ -21,7 +21,7 @@ defmodule B10g.Router do
 
     get "/create", EditorController, :create
     get "/ui/:id", EditorController, :ui
-    post "/update", EditorController, :update
+    put "/update", EditorController, :update
   end
 
 	# the authentication views

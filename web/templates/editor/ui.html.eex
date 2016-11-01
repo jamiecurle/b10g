@@ -1,5 +1,7 @@
 
-<%= form_for @cs, editor_path(@conn, :ui, @post.id  ), fn f -> %>
+<%= form_for @cs, editor_path(@conn, :update  ), fn f -> %>
+
+  <%= hidden_input f, :id %>
 
 <div class="form-group">
   <%= label f, :title %>
