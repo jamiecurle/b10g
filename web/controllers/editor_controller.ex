@@ -5,7 +5,7 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
-  def update(conn, %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown}) do
+  def update(conn, %{"post"=> %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown}}) do
     # get the post
     post = Repo.get(Post, id)
           |> Repo.preload([:user])
@@ -23,6 +23,7 @@ defmodule B10g.EditorController do
 
     # return the connection
     conn
+    |> redirect(to: editor_path(conn, :ui, id))
   end
 
   def create(conn, _params) do
