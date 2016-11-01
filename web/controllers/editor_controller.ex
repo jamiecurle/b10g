@@ -20,10 +20,8 @@ defmodule B10g.EditorController do
     }
 
     # make the changeset
-    cs = Post.create_changeset(post, params)
+    cs = Post.changeset(post, params)
     {:ok, post2} = Repo.update(cs)
-    IO.inspect cs
-    IO.inspect post2
     conn
   end
 

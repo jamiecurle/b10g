@@ -40,7 +40,8 @@ defmodule B10g.Mixfile do
      {:cowboy, "~> 1.0"},
      {:timex, "~> 3.0"},
      {:timex_ecto, "~> 3.0"},
-     {:comeonin, "~> 2.6"}]
+     {:comeonin, "~> 2.6"},
+     {:earmark, "~> 1.0"},]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

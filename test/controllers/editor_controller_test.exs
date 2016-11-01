@@ -39,7 +39,11 @@ defmodule B10g.EditorControllerTest do
     # get the post
     p = Repo.get(Post, post.id)
 
-    #
+    # p now different to the original
+		assert p.title != post.title
+		assert p.slug != post.slug
+		assert p.body != post.body
+		assert p.markdown != post.markdown
   end
 
   test "/editor/create works as expected", %{good_conn: good_conn, user: user} do

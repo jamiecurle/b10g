@@ -17,7 +17,7 @@ defmodule B10g.Post do
     timestamps()
   end
 
-  @required_fields ~w(title body slug markdown user_id)
+  @required_fields ~w(title slug markdown user_id)
   @optional_fields ~w(inserted_at updated_at)
 
   def create_changeset(struct, params \\ %{}) do
@@ -31,7 +31,18 @@ defmodule B10g.Post do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_required([:title, :body])
+    |> validate_required([:title, :markdown, :slug])
+		|> markdown()
+  end
+
+  def markdown(changeset) do
+  	case changeset do
+  		%Ecto.Changeset{valid?: true, changes: %{markdown: markdown}} ->
+  			put_change(changeset, :body, Earmark.to_html(changeset.changes.markdown))
+			_ ->
+			changeset
+  	end
+
   end
 
 end
