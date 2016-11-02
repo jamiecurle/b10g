@@ -14,6 +14,7 @@ defmodule B10g.Post do
 
     belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
+    # TODO belongs_to :site, B10g.Site
 
     timestamps()
   end
@@ -26,6 +27,13 @@ defmodule B10g.Post do
     |> cast(params, ~w(user_id ), @optional_fields)
   end
 
+	@doc """
+
+	"""
+	def posts_for_site() do
+	  IO.inspect "model"
+	end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
@@ -36,6 +44,9 @@ defmodule B10g.Post do
 		|> markdown()
   end
 
+	@doc """
+	If markdown present in changeset render out html
+	"""
   def markdown(changeset) do
   	case changeset do
   		%Ecto.Changeset{valid?: true, changes: %{markdown: _markdown}} ->
@@ -43,7 +54,6 @@ defmodule B10g.Post do
 			_ ->
 			changeset
   	end
-
   end
 
 end
