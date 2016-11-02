@@ -5,9 +5,32 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
+  def update(conn, %{"post"=> %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown}}) do
+    # get the post
+    post = Repo.get(Post, id)
+          |> Repo.preload([:user])
+
+    # make the params
+    params = %{
+      title: title,
+      slug: slug,
+      markdown: markdown
+    }
+
+    # make the changeset, it should work, so allow non working to blow up
+    cs = Post.changeset(post, params)
+    {:ok, _post} = Repo.update(cs)
+
+    # return the connection
+    conn
+    |> redirect(to: editor_path(conn, :ui, id))
+  end
+
   def create(conn, _params) do
     # make the post - niavely assume it is going to work
     cs = Post.create_changeset(%Post{}, %{user_id: conn.assigns[:site].user_id})
+
+
     {:ok, post} = Repo.insert(cs)
 
     # return a redirect to the editor

@@ -27,6 +27,27 @@ defmodule B10g.EditorControllerTest do
   end
 
 	# TODO - ensure can only get posts that belong to the site
+  test "POST /editor/ui/:id saves the post", %{good_conn: good_conn, post: post, user: user} do
+    # make url
+    url = editor_path(@endpoint, :update)
+
+	  # post to the url
+	  conn = good_conn
+					 |> assign(:current_user, user)
+					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+
+    # get the post
+    p = Repo.get(Post, post.id)
+
+    # p now different to the original
+		assert p.title != post.title
+		assert p.slug != post.slug
+		assert p.body != post.body
+		assert p.markdown != post.markdown
+
+		# conn redirects back to ui
+		assert redirected_to(conn) == editor_path(conn, :ui, p.id)
+  end
 
   test "/editor/create works as expected", %{good_conn: good_conn, user: user} do
     # make url

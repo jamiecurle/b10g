@@ -48,7 +48,7 @@ defmodule B10g.AuthControllerTest do
     assert conn.status == 200
   end
 
-  test "GET /login/auth", %{good_conn: good_conn, url: url, site: site} do
+  test "GET /login/auth", %{good_conn: good_conn, url: url} do
     assert 200 == get(good_conn, url).status
   end
 end
