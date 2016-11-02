@@ -12,12 +12,13 @@ defmodule B10g.Post do
     field :slug, :string
     field :markdown, :string
 
+    belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
 
     timestamps()
   end
 
-  @required_fields ~w(title slug markdown user_id)
+  @required_fields ~w(title slug markdown site_id user_id)
   @optional_fields ~w(inserted_at updated_at)
 
   def create_changeset(struct, params \\ %{}) do
