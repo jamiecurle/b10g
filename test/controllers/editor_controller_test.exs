@@ -7,7 +7,7 @@ defmodule B10g.EditorControllerTest do
     B10g.SiteServer.start_link
 
     # make a post
-		{:ok, post} = Factory.create_post(%{user_id: user.id})
+		{:ok, post} = Factory.create_post(%{user_id: user.id, site_id: site.id})
 
 		# make the url
 		url = editor_path(@endpoint, :ui, post.id)
@@ -27,7 +27,56 @@ defmodule B10g.EditorControllerTest do
   end
 
 	# TODO - ensure can only get posts that belong to the site
-  test "POST /editor/ui/:id saves the post", %{good_conn: good_conn, post: post, user: user} do
+	test "404 on :ui if post does not belong to the site", %{user: user, good_conn: good_conn, post: post, url: url} do
+		# make another site & user
+ 		{:ok, u2} = Factory.create_user(%{email: "d@c.e"})
+    {:ok, s2} = Factory.create_site(%{user_id: u2.id})
+
+		# get the ui and is 200
+		conn = good_conn
+					 |> assign(:current_user, user)
+					 |> get(url)
+		assert 200 == conn.status
+
+    # update post
+    cs = Post.changeset(post, %{site_id: s2.id, user_id: u2.id })
+		Repo.update(cs)
+
+		# get the ui and is 404
+		conn = good_conn
+					 |> assign(:current_user, user)
+					 |> get(url)
+		assert 404 == conn.status
+	end
+
+	test "404 on :update if post does not belong to the site",  %{good_conn: good_conn, post: post, user: user} do
+    # make url
+    url = editor_path(@endpoint, :update)
+
+	  # post to the url - 302
+	  conn = good_conn
+					 |> assign(:current_user, user)
+					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+		assert 302 == conn.status
+
+
+		# make another site & user
+ 		{:ok, u2} = Factory.create_user(%{email: "d@c.e"})
+    {:ok, s2} = Factory.create_site(%{user_id: u2.id})
+
+    # update post
+    cs = Post.changeset(post, %{site_id: s2.id, user_id: u2.id })
+		Repo.update(cs)
+
+	  # post to the url
+	  conn = good_conn
+					 |> assign(:current_user, user)
+					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+		assert 404 == conn.status
+	end
+
+
+  test "POST /editor/ui/update saves the post", %{good_conn: good_conn, post: post, user: user} do
     # make url
     url = editor_path(@endpoint, :update)
 

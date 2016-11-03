@@ -30,8 +30,10 @@ defmodule B10g.Post do
 	@doc """
 
 	"""
-	def posts_for_site() do
-	  IO.inspect "model"
+	def posts_for_site(query, site) do
+	  from p in query,
+	  	where: p.site_id == ^site.id,
+	  	preload: [:user]
 	end
 
   @doc """
