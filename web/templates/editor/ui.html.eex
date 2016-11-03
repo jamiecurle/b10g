@@ -14,6 +14,11 @@
 </div>
 
 <div class="form-group">
+  <%= label f, :status %>
+  <%= text_input f, :status, class: "form-control" %>
+</div>
+
+<div class="form-group">
   <%= label f, :markdown %>
   <%= textarea f, :markdown, class: "form-control", style: "min-height: 400px" %>
 </div>
