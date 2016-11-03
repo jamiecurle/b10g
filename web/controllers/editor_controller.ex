@@ -7,23 +7,35 @@ defmodule B10g.EditorController do
 
   def update(conn, %{"post"=> %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown}}) do
     # get the post
-    post = Repo.get(Post, id)
-          |> Repo.preload([:user])
+    post = Post
+    			|> Post.posts_for_site(conn.assigns.site)
+    			|> Repo.get(id)
 
-    # make the params
-    params = %{
-      title: title,
-      slug: slug,
-      markdown: markdown
-    }
 
-    # make the changeset, it should work, so allow non working to blow up
-    cs = Post.changeset(post, params)
-    {:ok, _post} = Repo.update(cs)
+		# if we had a post, do something else 404
+    case post do
+      nil ->
+        # 404
+        conn
+        |> put_status(:not_found)
+        |> render(B10g.ErrorView, "404.html")
+      post ->
 
-    # return the connection
-    conn
-    |> redirect(to: editor_path(conn, :ui, id))
+				# make the params
+				params = %{
+					title: title,
+					slug: slug,
+					markdown: markdown
+				}
+
+				# make the changeset, it should work, so allow non working to blow up
+				cs = Post.changeset(post, params)
+				{:ok, _post} = Repo.update(cs)
+
+				# return the connection
+				conn
+				|> redirect(to: editor_path(conn, :ui, id))
+    end
   end
 
   def create(conn, _params) do
@@ -40,13 +52,24 @@ defmodule B10g.EditorController do
 
   def ui(conn, %{"id" => id}) do
 		# get post
-		post = Repo.get(Post, id)
+    post = Post
+    			|> Post.posts_for_site(conn.assigns.site)
+    			|> Repo.get(id)
 
-		# make a changeset
-		cs  = Post.changeset(post, %{})
+		# ui or 404
+    case post do
+      nil ->
+        # 404
+        conn
+        |> put_status(:not_found)
+        |> render(B10g.ErrorView, "404.html")
 
-		# return the connection
-    conn
-    |> render("ui.html", post: post, cs: cs)
+    	post ->
+				# make a changeset render
+				cs  = Post.changeset(post, %{})
+				conn
+				|> render("ui.html", post: post, cs: cs)
+    end
   end
+
 end

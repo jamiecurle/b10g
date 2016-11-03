@@ -26,11 +26,14 @@ defmodule B10g.Factory do
   	# must always have a user_id
 		user_id = _get_user_id(params)
 
+		site_id = _get_site_id(params)
+
 		# merge the params with some defaults
 	  params = Map.merge(%{title: "A Title",
 	  											body: "<h1>Hello</h1>",
 	  											markdown: "# Hello",
 	  											slug: "a-title",
+	  											site_id: site_id,
 	  											user_id: user_id}, params)
 
 		# make the changeset
@@ -71,12 +74,20 @@ defmodule B10g.Factory do
 
   end
 
-
-
 	defp _get_user_id(params) do
 		case Map.get(params, :user_id) do
 			nil ->
 				{ok, u} = create_user()
+				u.id
+			user_id ->
+				user_id
+		end
+	end
+
+	defp _get_site_id(params) do
+		case Map.get(params, :site_id) do
+			nil ->
+				{ok, u} = create_site()
 				u.id
 			user_id ->
 				user_id
