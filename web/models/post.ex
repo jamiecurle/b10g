@@ -11,10 +11,10 @@ defmodule B10g.Post do
     field :body, :string
     field :slug, :string
     field :markdown, :string
+    field :status, :string
 
     belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
-    # TODO belongs_to :site, B10g.Site
 
     timestamps()
   end
