@@ -5,37 +5,31 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
-  def update(conn, %{"post"=> %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown, "status" => status}}) do
+  def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
-    			|> Post.posts_for_site(conn.assigns.site)
-    			|> Repo.get(id)
+			|> Post.posts_for_site(conn.assigns.site)
+			|> Repo.get(id)
 
-
-		# if we had a post, do something else 404
     case post do
+	    # no post so 404
       nil ->
-        # 404
         conn
         |> put_status(:not_found)
         |> render(B10g.ErrorView, "404.html")
+
+			# have post so attempt to update
       post ->
+				cs = Post.changeset(post, post_params)
+      	case Repo.update(cs) do
+      	  {:ok, post} ->
+						conn
+						|> redirect(to: editor_path(conn, :ui, id))
 
-				# make the params
-				params = %{
-					title: title,
-					slug: slug,
-					status: status,
-					markdown: markdown
-				}
-
-				# make the changeset, it should work, so allow non working to blow up
-				cs = Post.changeset(post, params)
-        Repo.update(cs)
-
-        conn
-        |> redirect(to: editor_path(conn, :ui, id))
-
+					{:error, cs} ->
+						conn
+						|> render("ui.html", post: post, cs: cs)
+      	end
     end
   end
 

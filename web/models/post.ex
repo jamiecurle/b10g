@@ -28,8 +28,9 @@ defmodule B10g.Post do
     |> cast(params, ~w(user_id ), @optional_fields)
   end
 
-	@doc """
 
+	@doc """
+	Gets the posts for a site
 	"""
 	def posts_for_site(query, site) do
 	  from p in query,

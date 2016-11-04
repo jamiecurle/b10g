@@ -51,12 +51,15 @@ defmodule B10g.EditorControllerTest do
 
 	test "404 on :update if post does not belong to the site",  %{good_conn: good_conn, post: post, user: user} do
     # make url
-    url = editor_path(@endpoint, :update)
+    url = editor_path(@endpoint, :update, post.id)
+
+    # make params
+    post_params = %{title: "TEST", slug: "test-test", markdown: "*yo\n*yo", status: post.status}
 
 	  # post to the url - 302
 	  conn = good_conn
 					 |> assign(:current_user, user)
-					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+					 |> put(url, post: post_params)
 		assert 302 == conn.status
 
 
@@ -68,22 +71,26 @@ defmodule B10g.EditorControllerTest do
     cs = Post.changeset(post, %{site_id: s2.id, user_id: u2.id })
 		Repo.update(cs)
 
-	  # post to the url
+	  # post to git the url
 	  conn = good_conn
 					 |> assign(:current_user, user)
-					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+					 |> put(url, post: post_params)
 		assert 404 == conn.status
 	end
 
 
   test "POST /editor/ui/update saves the post", %{good_conn: good_conn, post: post, user: user} do
     # make url
-    url = editor_path(@endpoint, :update)
+    url = editor_path(@endpoint, :update, post.id)
 
-	  # post to the url
+    # make params
+    post_params = %{title: "TEST", slug: "test-test", markdown: "*yo\n*yo", status: post.status}
+
+
+	  # post to the url - 302
 	  conn = good_conn
 					 |> assign(:current_user, user)
-					 |> put(url, %{post: %{id: post.id, title: "TEST", slug: "test-test", markdown: "*yo\n*yo"}})
+					 |> put(url, post: post_params)
 
     # get the post
     p = Repo.get(Post, post.id)
