@@ -40,6 +40,12 @@ defmodule B10g.Post do
 	  	preload: [:user, :site]
 	end
 
+	def published_posts_for_site(query, site) do
+		query
+		|> posts_for_site(site)
+		|> where([p], p.status == "PUBLISHED")
+	end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
