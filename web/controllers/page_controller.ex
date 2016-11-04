@@ -5,8 +5,19 @@ defmodule B10g.PageController do
   plug :put_layout, "blog.html"
 
 	def detail(conn, identifer) do
+#
+#iex(3)> Integer.parse("2")
+#{2, ""}
+#iex(4)> Integer.parse("a")
+#:error
+#iex(5)>
+
+		posts = Post
+			|> Post.published_posts_for_site(conn.assigns.site)
+			|> Repo.all
+
 		conn
-		 |> render("index.html")
+		 |> render("detail.html")
 	end
 
 
