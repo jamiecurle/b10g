@@ -1,5 +1,12 @@
+<%= if @cs.action do %>
+  <div class="alert alert-danger">
+    <p>Oops, something went wrong! Please check the errors below.</p>
+  </div>
+<% end %>
+
 
 <%= form_for @cs, editor_path(@conn, :update, @post.id), fn f -> %>
+
 
 
 <div class="form-group">
@@ -14,7 +21,7 @@
 
 <div class="form-group">
   <%= label f, :status %>
-  <%= text_input f, :status, class: "form-control" %>
+  <%= select f, :status, post_statuses, class: "form-control" %>
 </div>
 
 <div class="form-group">

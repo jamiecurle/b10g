@@ -5,6 +5,7 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
+
   def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
@@ -21,17 +22,22 @@ defmodule B10g.EditorController do
 			# have post so attempt to update
       post ->
 				cs = Post.changeset(post, post_params)
+
       	case Repo.update(cs) do
       	  {:ok, post} ->
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
-
 					{:error, cs} ->
 						conn
 						|> render("ui.html", post: post, cs: cs)
       	end
     end
   end
+
+	def update(conn, %{"id" => id}) do
+	  conn
+	  |> redirect(to: editor_path(conn, :ui, id))
+	end
 
   def create(conn, _params) do
     # make the post - niavely assume it is going to work

@@ -23,6 +23,8 @@ defmodule B10g.Post do
   @required_fields ~w(title slug markdown site_id user_id status)
   @optional_fields ~w(inserted_at updated_at)
 
+	def valid_statuses, do: @post_status
+
   def create_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(user_id ), @optional_fields)
