@@ -33,6 +33,7 @@ defmodule B10g.Factory do
 	  											body: "<h1>Hello</h1>",
 	  											markdown: "# Hello",
 	  											slug: "a-title",
+	  											status: "PUBLISHED",
 	  											site_id: site_id,
 	  											user_id: user_id}, params)
 

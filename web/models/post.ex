@@ -4,6 +4,7 @@ defmodule B10g.Post do
   use B10g.Web, :model
   use Timex.Ecto.Timestamps
 
+  @post_status ~w(DRAFT PUBLISHED)
 
   @derive {Poison.Encoder, only: [:id, :title, :body, :string, :markdown, :slug, :hidden]}
   schema "posts" do
@@ -11,29 +12,32 @@ defmodule B10g.Post do
     field :body, :string
     field :slug, :string
     field :markdown, :string
+    field :status, :string, default: "DRAFT"
 
     belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
-    # TODO belongs_to :site, B10g.Site
 
     timestamps()
   end
 
-  @required_fields ~w(title slug markdown site_id user_id)
+  @required_fields ~w(title slug markdown site_id user_id status)
   @optional_fields ~w(inserted_at updated_at)
+
+	def valid_statuses, do: @post_status
 
   def create_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(user_id ), @optional_fields)
   end
 
-	@doc """
 
+	@doc """
+	Gets the posts for a site
 	"""
 	def posts_for_site(query, site) do
 	  from p in query,
 	  	where: p.site_id == ^site.id,
-	  	preload: [:user]
+	  	preload: [:user, :site]
 	end
 
   @doc """
@@ -42,8 +46,26 @@ defmodule B10g.Post do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_required([:title, :markdown, :slug])
+    |> validate_required([:title, :markdown, :slug, :status])
+    |> validate_status()
 		|> markdown()
+  end
+
+	@doc """
+	validate the status of the enum
+	"""
+  def validate_status(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{status: status}} ->
+        case Enum.member?(@post_status, status) do
+          true ->
+            changeset
+          false ->
+            Ecto.Changeset.add_error(changeset, :status, "#{changeset.changes.status} is not a valid value")
+        end
+      _ ->
+      changeset
+    end
   end
 
 	@doc """

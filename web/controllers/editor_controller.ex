@@ -5,38 +5,39 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.AuthPlug
 
-  def update(conn, %{"post"=> %{"id" => id, "title" => title, "slug" => slug, "markdown" => markdown}}) do
+
+  def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
-    			|> Post.posts_for_site(conn.assigns.site)
-    			|> Repo.get(id)
+			|> Post.posts_for_site(conn.assigns.site)
+			|> Repo.get(id)
 
-
-		# if we had a post, do something else 404
     case post do
+	    # no post so 404
       nil ->
-        # 404
         conn
         |> put_status(:not_found)
         |> render(B10g.ErrorView, "404.html")
+
+			# have post so attempt to update
       post ->
+				cs = Post.changeset(post, post_params)
 
-				# make the params
-				params = %{
-					title: title,
-					slug: slug,
-					markdown: markdown
-				}
-
-				# make the changeset, it should work, so allow non working to blow up
-				cs = Post.changeset(post, params)
-				{:ok, _post} = Repo.update(cs)
-
-				# return the connection
-				conn
-				|> redirect(to: editor_path(conn, :ui, id))
+      	case Repo.update(cs) do
+      	  {:ok, post} ->
+						conn
+						|> redirect(to: editor_path(conn, :ui, id))
+					{:error, cs} ->
+						conn
+						|> render("ui.html", post: post, cs: cs)
+      	end
     end
   end
+
+	def update(conn, %{"id" => id}) do
+	  conn
+	  |> redirect(to: editor_path(conn, :ui, id))
+	end
 
   def create(conn, _params) do
     # make the post - niavely assume it is going to work
