@@ -4,28 +4,36 @@ defmodule B10g.PageController do
 
   plug :put_layout, "blog.html"
 
-	def detail(conn, identifer) do
-#
-#iex(3)> Integer.parse("2")
-#{2, ""}
-#iex(4)> Integer.parse("a")
-#:error
-#iex(5)>
+	def detail(conn, %{"identifer" => identifer}) do
+		# phoenix always passes identifier through as string
+		identifer = case Integer.parse(identifer) do
+		  {integer, _string} ->
+		  	integer
+		  :error ->
+		  	identifer
+		end
 
-		posts = Post
-			|> Post.published_posts_for_site(conn.assigns.site)
-			|> Repo.all
 
+		# now get the post
+		post = Post
+			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+			|> Post.get(identifer)
+			|> Repo.one
+
+		# render the page
 		conn
-		 |> render("detail.html")
+		 |> render("detail.html", post: post)
 	end
 
 
   def index(conn, _params) do
+		# get the posts
+		posts = Post
+			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+			|> Repo.all
 
-		posts = Post |> Post.published_posts_for_site(conn.assigns.site) |> Repo.all
-
+		# render the page out
 		conn
-    |> render("index.html", posts: posts)
+    	|> render("index.html", posts: posts)
   end
 end

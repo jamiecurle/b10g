@@ -9,7 +9,7 @@ defmodule B10g.EditorController do
   def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
-			|> Post.posts_for_site(conn.assigns.site)
+			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
 			|> Repo.get(id)
 
     case post do
@@ -24,7 +24,7 @@ defmodule B10g.EditorController do
 				cs = Post.changeset(post, post_params)
 
       	case Repo.update(cs) do
-      	  {:ok, post} ->
+      	  {:ok, _} ->
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
 					{:error, cs} ->
@@ -54,8 +54,8 @@ defmodule B10g.EditorController do
   def ui(conn, %{"id" => id}) do
 		# get post
     post = Post
-    			|> Post.posts_for_site(conn.assigns.site)
-    			|> Repo.get(id)
+			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+    	|> Repo.get(id)
 
 		# ui or 404
     case post do
