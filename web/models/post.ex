@@ -6,7 +6,7 @@ defmodule B10g.Post do
 
   @post_status ~w(DRAFT PUBLISHED)
 
-  @derive {Poison.Encoder, only: [:id, :title, :body, :string, :markdown, :slug, :hidden]}
+  @derive {Poison.Encoder, only: [:id, :title, :body, :string, :markdown, :slug, :hidden, :status]}
   schema "posts" do
     field :title, :string
     field :body, :string
@@ -32,12 +32,49 @@ defmodule B10g.Post do
 
 
 	@doc """
-	Gets the posts for a site
+	When user is nil, returns PUBLISHED posts for a site
+	When user is not nil, returns ALL posts for a site
 	"""
-	def posts_for_site(query, site) do
+	#TODO: rename this to all so we have Post.all & Post.one
+	def filter(query, site, user \\ nil)
+
+	@shortdoc "When site is :notfound"
+	def filter(query, site, _user) when is_atom(site) do
+	  from p in query,
+	  	where: false
+	end
+
+	def filter(query, site, user) when is_nil(user) do
+	  from p in query,
+	  	where: p.site_id == ^site.id,
+	  	where: p.status == "PUBLISHED",
+	  	preload: [:user, :site]
+	end
+
+	def filter(query, site, user) when not is_nil(user) do
 	  from p in query,
 	  	where: p.site_id == ^site.id,
 	  	preload: [:user, :site]
+	end
+
+	@doc """
+	When identifier is a string, gets a single post from filtered posts by slug
+	When identifier is an integer, gets a single post from filtered posts by id
+	"""
+	def get(query, identifier)
+
+
+	def get(query, identifer) when is_binary(identifer) do
+		from p in query,
+			where: p.slug == ^identifer,
+	  	preload: [:user, :site]
+	end
+
+
+	def get(query, identifer) when is_integer(identifer) do
+		from p in query,
+			where: p.id == ^identifer,
+			preload: [:user, :site]
 	end
 
   @doc """

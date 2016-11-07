@@ -37,6 +37,7 @@ defmodule B10g.Router do
   scope "/", B10g do
     pipe_through :browser
 
+    get "/:identifer", PageController, :detail
     get "/", PageController, :index
   end
 

@@ -3,3 +3,17 @@
   A better version of things
 </p>
 
+<%= for post <- @posts do %>
+  <div>
+    <h2>
+      <a href="<%= page_path(@conn, :detail, post.id) %>">
+        <%= if post.title do %>
+          <%= post.title %>
+          <% else %>
+          UNTITLED <%= post.id %>
+        <% end %>
+       </a>
+     </h2>
+     <span class="meta">  <%= ui_time post.inserted_at %> </span>
+     </div>
+<% end %>
