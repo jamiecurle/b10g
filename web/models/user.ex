@@ -7,6 +7,7 @@ defmodule B10g.User do
     field :name, :string
     field :password_hashed, :string
     field :password, :string, virtual: true
+    field :apikey, :string
     timestamps()
   end
 
