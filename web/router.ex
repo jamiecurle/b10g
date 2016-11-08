@@ -19,7 +19,6 @@ defmodule B10g.Router do
   scope "/api", B10g do
     pipe_through :api
     post "/posts/create", APIController, :create
-
   end
 
   # the editor
