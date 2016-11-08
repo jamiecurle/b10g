@@ -27,7 +27,7 @@ defmodule B10g.Post do
 
   def create_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(user_id ), @optional_fields)
+    |> cast(params, ~w(user_id site_id), @optional_fields)
   end
 
 
@@ -84,6 +84,7 @@ defmodule B10g.Post do
     struct
     |> cast(params, @required_fields, @optional_fields)
     |> validate_required([:title, :markdown, :slug, :status])
+    |> unique_constraint(:site_id_slug)
     |> validate_status()
 		|> markdown()
   end

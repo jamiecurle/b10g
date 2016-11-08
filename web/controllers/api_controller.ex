@@ -7,19 +7,17 @@ defmodule B10g.APIController do
 		# make changeset
 		cs = Post.changeset(%Post{}, post)
 
-		# if same slug, site_id exists, return error
+		case Repo.insert(cs) do
+			{:ok, post} ->
+				conn
+				|> put_status(201)
+				|> render("create.json", status: "success")
 
-			case Repo.insert(cs) do
-				{:ok, post} ->
-					conn
-					|> put_status(201)
-					|> render("create.json", status: "success")
-
-				{:error, cs} ->
-					conn
-					|> put_status(400)
-					|> render("errors.json", status: "error", changeset: cs)
-			end
+			{:error, cs} ->
+				conn
+				|> put_status(400)
+				|> render("errors.json", status: "error", changeset: cs)
+		end
 
 	end
 end
