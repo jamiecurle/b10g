@@ -12,12 +12,14 @@ defmodule B10g.APIControllerTest do
 		# setup a connection we can use
     good_conn = build_conn()
           |> put_req_header("accept", "application/json")
+          |> put_req_header("authorization", "Bearer #{user.apikey}")
           |> Map.put(:host, site.cname)
 
 
 		# make the tuple
     {:ok, url: url, site: site, good_conn: good_conn, user: user}
   end
+
 
   test "no dupe slugs", %{url: url, site: site, good_conn: good_conn, user: user} do
     # make data

@@ -1,6 +1,5 @@
 defmodule B10g.UserModelTests do
     use B10g.ModelCase
-    alias B10g.Factory
     alias B10g.User
 
 		test "registration changeset creates apikey", %{} do
