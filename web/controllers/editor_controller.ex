@@ -43,7 +43,7 @@ defmodule B10g.EditorController do
     # make the post - niavely assume it is going to work
     cs = Post.create_changeset(
       %Post{},
-      %{user_id: conn.assigns[:site].user_id})
+      %{user_id: conn.assigns[:site].user_id, site_id: conn.assigns[:site].id})
 
     # inser the post
     {:ok, post} = Repo.insert(cs)

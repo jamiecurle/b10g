@@ -28,6 +28,11 @@ defmodule B10g.Post do
   def create_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, ~w(user_id site_id), @optional_fields)
+    |> random_name()\
+  end
+
+  def random_name(changeset) do
+    put_change(changeset, :slug, B10g.Names.random_name)
   end
 
 

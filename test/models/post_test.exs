@@ -24,7 +24,7 @@ defmodule B10g.PostModelTests do
 			assert p1.id == (Post |> Post.filter(s1) |> Repo.get(p1.id)).id
 
 			# update p2 to belong to s1 & u1
-			cs = Post.changeset(p2, %{site_id: s1.id, user_id: u1.id})
+			cs = Post.changeset(p2, %{site_id: s1.id, user_id: u1.id, slug: "if-not-change-error", title: B10g.Names.random_name})
 			{:ok, _p2} = Repo.update(cs)
 
 			# now we have two
