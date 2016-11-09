@@ -3,7 +3,7 @@ defmodule B10g.EditorController do
   alias B10g.Post
 
   plug :put_layout, "app.html"
-  plug B10g.AuthPlug
+  plug B10g.BrowserAuthPlug
 
 
   def update(conn, %{"id" => id, "post" => post_params}) do

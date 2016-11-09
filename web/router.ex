@@ -14,6 +14,7 @@ defmodule B10g.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug B10g.CnamePlug
+    plug B10g.APIAuthPlug
   end
 
   scope "/api", B10g do
