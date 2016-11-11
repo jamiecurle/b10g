@@ -24,7 +24,6 @@ defmodule B10g.Names do
      ]
 
   def random_name do
-    :random.seed(:erlang.now)
-    "#{Enum.random(@adjectives)}-#{Enum.random(@nouns)}-#{:random.uniform(9999)}"
+    "#{Enum.random(@adjectives)}-#{Enum.random(@nouns)}-#{:rand.uniform(9999)}"
   end
 end
