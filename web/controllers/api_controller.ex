@@ -4,14 +4,14 @@ defmodule B10g.APIController do
 
 	def create(conn, %{"post" => post}) do
 		# make sure we cannot insert posts for other peoples blogs
-		IO.inspect post
+		IO.inspect conn.assigns[:current_user]
 
 
 		# make changeset
 		cs = Post.changeset(%Post{}, post)
 
 		case Repo.insert(cs) do
-			{:ok, post} ->
+			{:ok, _post} ->
 				conn
 				|> put_status(201)
 				|> render("create.json", status: "success")

@@ -29,8 +29,9 @@ defmodule B10g.APIAuthPlug do
              |> put_resp_content_type("application/json")
              |> send_resp(:forbidden, Poison.encode!(%{error: "User not authorised for this site"}))
              |> halt()
-           %User{id: id} ->
+           user ->
             conn
+            |> assign(:current_user, user)
         end
     end
   end
