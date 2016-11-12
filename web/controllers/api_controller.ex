@@ -3,6 +3,9 @@ defmodule B10g.APIController do
 	alias B10g.Post
 
 	def create(conn, %{"post" => post}) do
+		# make sure we cannot insert posts for other peoples blogs
+		IO.inspect post
+
 
 		# make changeset
 		cs = Post.changeset(%Post{}, post)
