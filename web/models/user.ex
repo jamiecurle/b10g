@@ -43,8 +43,7 @@ defmodule B10g.User do
   defp put_pass_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
-        put_change(changeset, :password_hashed, :crypto.hash(:md5, pass) |> Base.encode16 |> String.downcase)
-        # put_change(changeset, :password_hashed, Comeonin.Bcrypt.hashpwsalt(pass))
+        put_change(changeset, :password_hashed, B10g.Auth.makepw(pass))
       _ ->
         changeset
     end

@@ -19,6 +19,10 @@ config :b10g, B10g.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :b10g, :auth,
+  encode: Comeonin.Bcrypt.hashpwsalt,
+  decode: Comeonin.Bcrypt.checkpw
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

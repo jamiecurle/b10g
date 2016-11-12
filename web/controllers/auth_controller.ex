@@ -3,7 +3,7 @@ defmodule B10g.AuthController do
   alias B10g.Repo
   alias B10g.User
   alias B10g.Site
-  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import B10g.Auth, only: [checkpw: 2, dummy_checkpw: 0]
   import Ecto.Query, only: [from: 2]
 
   def login(conn, %{"email" => email, "password" => password}) do
