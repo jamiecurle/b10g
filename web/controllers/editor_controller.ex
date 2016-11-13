@@ -3,7 +3,7 @@ defmodule B10g.EditorController do
   alias B10g.Post
 
   plug :put_layout, "app.html"
-  plug B10g.AuthPlug
+  plug B10g.BrowserAuthPlug
 
 
   def update(conn, %{"id" => id, "post" => post_params}) do
@@ -41,9 +41,11 @@ defmodule B10g.EditorController do
 
   def create(conn, _params) do
     # make the post - niavely assume it is going to work
-    cs = Post.create_changeset(%Post{}, %{user_id: conn.assigns[:site].user_id})
+    cs = Post.create_changeset(
+      %Post{},
+      %{user_id: conn.assigns[:site].user_id, site_id: conn.assigns[:site].id})
 
-
+    # inser the post
     {:ok, post} = Repo.insert(cs)
 
     # return a redirect to the editor

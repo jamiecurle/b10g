@@ -1,4 +1,4 @@
-defmodule B10g.AuthPlug do
+defmodule B10g.BrowserAuthPlug do
   import Plug.Conn
   use Phoenix.Controller
   alias B10g.Router.Helpers

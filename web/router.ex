@@ -13,6 +13,13 @@ defmodule B10g.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug B10g.CnamePlug
+    plug B10g.APIAuthPlug
+  end
+
+  scope "/api", B10g do
+    pipe_through :api
+    post "/posts/create", APIController, :create
   end
 
   # the editor
