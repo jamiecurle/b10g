@@ -18,9 +18,9 @@ defmodule B10g.Auth do
             |> String.downcase
   end
 
-  def checkpw(raw, pass) do
+  def checkpw(raw, hashed_password) do
     try do
-      Comeonin.Bcrypt.checkpw(raw, pass)
+      Comeonin.Bcrypt.checkpw(raw, hashed_password)
     rescue
       MatchError ->
         false
