@@ -9,7 +9,7 @@ defmodule B10g.UserPlug do
     case Map.get(conn.assigns, :current_user) do
       nil ->
         user_id = get_session(conn, :user_id)
-        user = user_id && repo.get(B10g.User, user_id)
+        user = user_id && repo.get(B10g.User, user_id) |> repo.preload([:sites])
         user_id && repo.get(B10g.User, user_id)
         assign(conn, :current_user, user)
       _ ->
