@@ -35,14 +35,13 @@ for post_name in os.listdir(OLD_POSTS):
         # make the post meta
         meta = toml.loads(parts[1])
 
-
         # and the post content
-        body = parts[2]
+        markdown = parts[2]
 
         # now build the post data
         post_data = {
             "title": meta['title'],
-            "body": body,
+            "markdown": markdown,
             "slug": slug,
             "status": "PUBLISHED" if meta.get("draft") == False else "DRAFT",
             "site_id": SITE_ID,
@@ -57,11 +56,10 @@ for post_name in os.listdir(OLD_POSTS):
         # make the request
         r = requests.post(
             "https://dev-jamie.curle.io/api/posts/create",
-            {"post": post_data},
+            post_data,
             headers=headers,
             verify=False)
 
         print r.status_code
         print r.content
-        print headers,post_data
-
+        print headers, post_data

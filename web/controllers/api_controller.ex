@@ -10,6 +10,9 @@ defmodule B10g.APIController do
 				Repo.preload(conn.assigns[:current_user], :sites).sites,
 				fn(site) -> site.id end)
 
+		# site id needs to be an integer
+		{site_id, _} = Integer.parse(site_id)
+
     case Enum.member?(site_ids, site_id) do
       true ->
         # make changeset
@@ -39,14 +42,15 @@ defmodule B10g.APIController do
       false ->
         conn
         |> put_status(400)
-        |> json(%{status: "error"})
+        |> json(%{status: "error", message: "No matching site found"})
     end
   end
 
 	def create(conn, params) do
-        conn
-        |> put_status(400)
-        |> json(%{status: "error", message: "Missing parameters: title, markdown, slug, status site_id and inserted are all required"})
+		IO.inspect params
+		conn
+		|> put_status(400)
+		|> json(%{status: "error", message: "Missing parameters: title, markdown, slug, status site_id, and inserted are all required"})
 	end
 
 
