@@ -13,7 +13,6 @@ defmodule B10g.PageController do
 		  	identifer
 		end
 
-
 		# now get the post
 		post = Post
 			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
@@ -30,6 +29,7 @@ defmodule B10g.PageController do
 		# get the posts
 		posts = Post
 			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+			|> order_by([p], desc: p.inserted_at)
 			|> Repo.all
 
 		# render the page out
