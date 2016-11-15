@@ -21,72 +21,67 @@ defmodule B10g.APIControllerTest do
   end
 
 
-  test "no dupe slugs", %{url: url, site: site, good_conn: good_conn, user: user} do
+  test "no dupe slugs", %{url: url, site: site, good_conn: good_conn} do
     # make data
     params = %{
-    	site_id: site.id,
-    	user_id: user.id,
     	title: "I am an API post",
-    	slug: "i-am-an-api-post",
-    	body: "<h1>Hello</h1>",
     	markdown: "# Hello",
-    	inserted_at: "2014-10-01T06:12:10+0000",
-    	updated_at: "2015-11-05T19:46:19+0000"}
+    	slug: "i-am-an-api-post",
+    	status: "PUBLISHED",
+    	site_id: site.id,
+    	inserted_at: "2014-10-01T06:12:10+0000"}
 
 		# count the posts
 		post_count = Post |> Repo.all |> Enum.count
 
     # post and it was created
-    conn = good_conn |> post(url, post: params)
+    conn = good_conn |> post(url, params)
     assert 201 == conn.status
 
     # we now have one more post
     assert post_count + 1 == Post |> Repo.all |> Enum.count
   end
 
-  test "cannot create for sites that user does not own", %{url: url, site: site, good_conn: good_conn, user: user} do
+  test "cannot create for sites that user does not own", %{url: url, good_conn: good_conn} do
     # make second site
     {:ok, site} = B10g.Factory.create_site()
+
     # make data
     params = %{
-    	site_id: site.id,
-    	user_id: user.id,
     	title: "I am an API post",
-    	slug: "i-am-an-api-post",
-    	body: "<h1>Hello</h1>",
     	markdown: "# Hello",
-    	inserted_at: "2014-10-01T06:12:10+0000",
-    	updated_at: "2015-11-05T19:46:19+0000"}
+    	slug: "i-am-an-api-post",
+    	status: "PUBLISHED",
+    	site_id: site.id,
+    	inserted_at: "2014-10-01T06:12:10+0000"}
 
 		# send again, was 400
-    conn = good_conn |> post(url, post: params)
+    conn = good_conn |> post(url, params)
 		assert 400 == conn.status
   end
 
-  test "post /api/posts/create creates post", %{url: url, site: site, good_conn: good_conn, user: user} do
+  test "post /api/posts/create creates post", %{url: url, site: site, good_conn: good_conn} do
     # make data
     params = %{
-    	site_id: site.id,
-    	user_id: user.id,
     	title: "I am an API post",
-    	slug: "i-am-an-api-post",
-    	body: "<h1>Hello</h1>",
     	markdown: "# Hello",
-    	inserted_at: "2014-10-01T06:12:10+0000",
-    	updated_at: "2015-11-05T19:46:19+0000"}
+    	slug: "i-am-an-api-post",
+    	status: "PUBLISHED",
+    	site_id: site.id,
+    	inserted_at: "2014-10-01T06:12:10+0000"}
 
 		# count the posts
 		post_count = Post |> Repo.all |> Enum.count
 
     # post it - was 201
-    conn = good_conn |> post(url, post: params)
+    conn = good_conn |> post(url, params)
 		assert 201 == conn.status
 
     # we now have one more post
     assert post_count + 1 == Post |> Repo.all |> Enum.count
 
 		# send again, was 400
-    conn = good_conn |> post(url, post: params)
+    conn = good_conn |> post(url, params)
 		assert 400 == conn.status
 
     # still only have one more
