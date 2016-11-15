@@ -8,6 +8,10 @@ defmodule B10g.User do
     field :password_hashed, :string
     field :password, :string, virtual: true
     field :apikey, :string
+
+    has_many :sites, B10g.Site
+    has_many :posts, B10g.Post
+
     timestamps()
   end
 
