@@ -11,7 +11,14 @@ defmodule B10g.APIController do
 				fn(site) -> site.id end)
 
 		# site id needs to be an integer
-		{site_id, _} = Integer.parse(site_id)
+		site_id = case is_integer(site_id) do
+		  true ->
+		  	site_id
+		  false ->
+		  {parsed_site_id, _} = Integer.parse(site_id)
+		  parsed_site_id
+		end
+
 
     case Enum.member?(site_ids, site_id) do
       true ->
