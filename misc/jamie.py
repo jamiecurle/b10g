@@ -2,6 +2,8 @@ import requests
 import frontmatter
 import os
 
+requests.packages.urllib3.disable_warnings()
+
 API_KEY =  os.environ.get("B10G_API_KEY")
 SITE_ID = os.environ.get("B10G_SITE_ID")
 
@@ -27,11 +29,8 @@ for post_name in os.listdir(OLD_POSTS):
     # load the frontmatter
     post = frontmatter.load(post_file)
 
-    print(post)
-
     # make the slug
     slug = post_name.replace(".md", "")
-
 
     # now build the post data
     post_data = {
@@ -55,4 +54,5 @@ for post_name in os.listdir(OLD_POSTS):
         headers=headers,
         verify=False)
 
-    print(r.status_code)
+    if r.status_code == 400 and 'site_slug_id' in r.json()['errors']:
+        print(r.json())
