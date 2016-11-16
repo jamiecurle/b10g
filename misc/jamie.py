@@ -1,65 +1,58 @@
 import requests
-import toml
+import frontmatter
 import os
 
-API_KEY =  os.environ.get("B10G_APIKEY")
+API_KEY =  os.environ.get("B10G_API_KEY")
 SITE_ID = os.environ.get("B10G_SITE_ID")
 
-print API_KEY, SITE_ID
+#print(API_KEY, SITE_ID
 
 
 OLD_POSTS = os.environ.get(
     "JAMIE_POSTS",
-    "/Users/jcurle/git/curle/jamiecurle/content/posts"
+    "/Users/jcurle/git/curle/migrateposts"
 )
 
 # iterate over all the posts
 for post_name in os.listdir(OLD_POSTS):
-    print "processing: {}".format(post_name)
+    print("processing: {}".format(post_name))
 
     # skip cruft
-    if post_name in ['.DS_Store']:
-        print "skipping cruft: {}".format(post_name)
+    if post_name in ['.DS_Store', '.git']:
+        print("skipping cruft: {}".format(post_name))
         continue
 
-    with open(os.path.join(OLD_POSTS, post_name), 'r') as post_fp:
-        # read the post
-        post = post_fp.read()
+    post_file = os.path.join(OLD_POSTS, post_name)
 
-        # make the slug
-        slug = post_name.replace(".md", "")
+    # load the frontmatter
+    post = frontmatter.load(post_file)
 
-        # make the parts
-        parts = post.split('---\n')
+    print(post)
 
-        # make the post meta
-        meta = toml.loads(parts[1])
+    # make the slug
+    slug = post_name.replace(".md", "")
 
-        # and the post content
-        markdown = parts[2]
 
-        # now build the post data
-        post_data = {
-            "title": meta['title'],
-            "markdown": markdown,
-            "slug": slug,
-            "status": "PUBLISHED" if meta.get("draft") == False else "DRAFT",
-            "site_id": SITE_ID,
-            "inserted_at": meta["date"]
-        }
+    # now build the post data
+    post_data = {
+        "title": post['title'],
+        "markdown": post.content,
+        "slug": slug,
+        "status": "PUBLISHED" if post.get("draft") == False else "DRAFT",
+        "site_id": SITE_ID,
+        "inserted_at": post["date"]
+    }
 
-        # make the headers
-        headers = {
-            "Authorization": "Bearer {}".format(API_KEY)
-        }
+    # make the headers
+    headers = {
+        "Authorization": "Bearer {}".format(API_KEY)
+    }
 
-        # make the request
-        r = requests.post(
-            "https://dev-jamie.curle.io/api/posts/create",
-            post_data,
-            headers=headers,
-            verify=False)
+    # make the request
+    r = requests.post(
+        "https://dev-jamie.curle.io/api/posts/create",
+        post_data,
+        headers=headers,
+        verify=False)
 
-        print r.status_code
-        print r.content
-        print headers, post_data
+    print(r.status_code)
