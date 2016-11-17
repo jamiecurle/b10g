@@ -1,0 +1,52 @@
+main{
+    background-size: 100% 27px;
+    background-image: linear-gradient(to bottom,
+    #dedede 0%,
+    transparent 3%,
+    transparent 100%);
+}
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin: 27px 0;
+    padding: 0;
+}
+
+h1{
+    font-size: 36px;
+}
+h2{
+    font-size: 27px;
+
+}
+
+p{
+    margin: 0 0 27px 0;
+}
+
+pre{
+    font-family: "Anonymous Pro", monospace;
+}
+
+img{
+    max-height:  594px;
+    max-width: 100%;
+}
+
+ul, ol{
+    padding-left: 54px;
+    list-style-type: decimal;
+}
+ol{
+    list-style-type: hebrew;
+}

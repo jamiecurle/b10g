@@ -8,7 +8,7 @@
   <meta name="author" content="">
 
   <title></title>
-  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro|Open+Sans|Roboto" rel="stylesheet">  <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
 </head>
 
 <body>
