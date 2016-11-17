@@ -1,41 +1,56 @@
-main{
-    background-size: 100% 27px;
-    background-image: linear-gradient(to bottom,
-    #dedede 0%,
-    transparent 3%,
-    transparent 100%);
-}
+
+/*main{*/
+    /*background-size: 100% 24px;*/
+    /*background-image: linear-gradient(to bottom,*/
+        /*#dedede 0%,*/
+        /*transparent 3%,*/
+        /*transparent 100%);*/
+/*}*/
 *{
     box-sizing: border-box;
 }
 body{
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    color: #2e2e2e;
 }
 
 h1, h2, h3, h4, h5, h6{
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    margin: 24px 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-weight: 800;
-    margin: 27px 0;
-    padding: 0;
+    color: #4e4e4e;
 }
 
 h1{
     font-size: 36px;
 }
 h2{
-    font-size: 27px;
-
+    font-size: 30px;
+    letter-spacing: -1px;
+    line-height: 24px;
 }
 
 p{
-    margin: 0 0 27px 0;
+    margin: 0 0 24px 0;
 }
 
+
+
 pre{
-    font-family: "Anonymous Pro", monospace;
+    box-sizing: border-box;
+    padding: 24px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    margin: 24px 0;
+    line-height: 24px;
+    background-color: #fbf6f8;
+    border-radius: 3px;
+    font-family: "Inconsolata", monospace;
 }
 
 img{
@@ -49,4 +64,13 @@ ul, ol{
 }
 ol{
     list-style-type: hebrew;
+}
+
+span.meta{
+    color: #9e9e9e;
+    font-style: italic;
+    font-size: 12px;
+}
+main{
+    background-color: #fff;
 }
