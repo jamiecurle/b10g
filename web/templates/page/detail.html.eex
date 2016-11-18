@@ -1,6 +1,6 @@
 <span class="meta">
 <%= ui_time @post.inserted_at %>
 </span>
-<h2><%= @post.title %> </h2>
+<h1><%= @post.title %> </h1>
 
 <%= raw @post.body %>
