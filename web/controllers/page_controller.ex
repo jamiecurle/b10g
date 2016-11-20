@@ -4,6 +4,17 @@ defmodule B10g.PageController do
 
   plug :put_layout, "blog.html"
 
+	def redirecter(conn, %{"identifer" => identifer}) do
+		# now get the post
+		post = Post
+			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+			|> Post.get(identifer)
+			|> Repo.one
+
+		conn
+			|> redirect(to: page_path(conn, :detail, post.slug))
+	end
+
 	def detail(conn, %{"identifer" => identifer}) do
 		# phoenix always passes identifier through as string
 		identifer = case Integer.parse(identifer) do
@@ -19,9 +30,15 @@ defmodule B10g.PageController do
 			|> Post.get(identifer)
 			|> Repo.one
 
-		# render the page
-		conn
-		 |> render("detail.html", post: post)
+		case post do
+		  nil ->
+				conn
+				 |> render(B10g.ErrorView, "404.html", class: "error")
+			post ->
+				conn
+				 |> render("detail.html", post: post, class: "detail")
+		end
+
 	end
 
 

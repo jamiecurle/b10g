@@ -58,7 +58,7 @@ defmodule B10g.Factory do
 
 		# make the params
     params = Map.merge(%{cname: "foo.bar.com",
-    										config: %{},
+    										config: %{"COLOUR": "#f90"},
     										user_id: user_id}, params)
 
 		# and make the changeset

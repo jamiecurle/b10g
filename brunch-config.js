@@ -20,8 +20,12 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css",
+      joinTo: {
+        "css/blog.css": /^(web\/static\/blog)/,
+        "css/app.css": /^(web\/static\/css)/
+      },
       order: {
+        before: ["web/static/blog/reset.css"],
         after: ["web/static/css/app.css"] // concat app.css last
       }
     },
