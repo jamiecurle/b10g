@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title></title>
-  <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-</head>
+    <title></title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <style>
+      a{
+        color: <%= @site.config["COLOUR"] %>;
+      }
+      div#id p a{
+        background-color: <%= @site.config["COLOUR"] %>;
+      }
 
-<body>
-<div class="container">
-  <main role="main">
-    <%= render @view_module, @view_template, assigns %>
-  </main>
+      body.index div.index a:hover{
+        background-color: <%= @site.config["COLOUR"] %>;
+      }
+    </style>
+  </head>
 
-</div> <!-- /container -->
-<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-</body>
+  <body class="<%= assigns[:class] || "index" %>">
+
+    <div id="id">
+      <p>
+        <a href="/"><%= @site.config["NAME"] %></a>
+      </p>
+    </div>
+
+    <div class="container">
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+    </div>
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
+  </body>
 </html>

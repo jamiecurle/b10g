@@ -1,0 +1,25 @@
+
+div.index div.DRAFT a{
+    padding: 4px;
+    border-radius: 3px;
+    font-weight: 200;
+    background-color: #fcfcfc;
+}
+
+div.index div.DRAFT a,
+div.index div.DRAFT span{
+    color: #cacaca;
+}
+div.index div.DRAFT p a:hover{
+    background-color: #cacaca;
+}
+div.index div.DRAFT p a:hover,
+div.index div.DRAFT p a:hover span{
+    color: #fff;
+}
+
+div.index div.DRAFT a:before{
+    content: "Draft: ";
+    text-transform: uppercase;
+    font-weight: 200;
+}

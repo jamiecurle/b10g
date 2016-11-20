@@ -1,5 +1,22 @@
-div.index{
-    border-left: 1px solid #efefef;
-    padding-left: 24px;
+div.index span{
+    font-style: italic;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ababab;
 }
-
+div.index a {
+    background-color: #fff;
+    padding: 24px;
+    margin: 24px;
+    display: block;
+    border-radius: 3px;
+    line-height: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: 0.2s background-color ease-in;
+}
+div.index a:hover,
+div.index a:hover span{
+    color: #fff;
+}

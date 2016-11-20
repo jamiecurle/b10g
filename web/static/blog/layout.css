@@ -1,12 +1,7 @@
+#id{
+    margin: 24px 24px 0 24px;
+}
 main{
     width: 720px;
-    padding: 27px;
-}
-
-pre{
-
-}
-
-img{
-
+    border-radius: 3px;
 }

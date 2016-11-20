@@ -2,7 +2,7 @@ defmodule B10g.ErrorView do
   use B10g.Web, :view
 
   def render("404.html", _assigns) do
-    "Page not found"
+    "Not Found"
   end
 
   def render("500.html", _assigns) do

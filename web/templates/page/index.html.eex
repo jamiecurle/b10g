@@ -1,16 +1,17 @@
-
 <div class="index">
-<%= for post <- @posts do %>
-  <div>
-    <p>
-      <a href="<%= page_path(@conn, :detail, post.id) %>">
-        <%= if post.title do %>
-          <%= post.title %>
-          <% else %>
-          UNTITLED <%= post.id %>
-        <% end %>
-       </a>
-     </p>
-   </div>
-<% end %>
+  <%= for post <- @posts do %>
+    <div class="<%= post.status %>">
+      <p>
+        <a href="<%= page_path(@conn, :detail, post.slug) %>">
+          <%= if post.title do %>
+              <%= post.title %>
+            <% else %>
+              UNTITLED <%= post.id %>
+            <% end %>
+            <br>
+            <span><%= ui_time(post.inserted_at) %></span>
+        </a>
+      </p>
+    </div>
+  <% end %>
 </div>
