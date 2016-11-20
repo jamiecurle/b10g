@@ -12,7 +12,7 @@ defmodule B10g.User do
     has_many :sites, B10g.Site
     has_many :posts, B10g.Post
 
-    timestamps()
+    timestamps
   end
 
   def changeset(model, params \\ %{}) do
