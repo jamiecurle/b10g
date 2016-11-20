@@ -2,6 +2,9 @@
   <%= ui_time @post.inserted_at %>
 </span>
 
+<%= if @conn.assigns[:current_user] do %>
+  <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit</a>
+<% end %>
 <h1><%= @post.title %> </h1>
 
 <%= raw @post.body %>

@@ -20,7 +20,7 @@ for post_name in os.listdir(OLD_POSTS):
 
     # skip cruft
     if post_name in ['.DS_Store', '.git']:
-        print "skipping cruft: {}".format(post_name)
+        print("skipping cruft: {}".format(post_name))
         continue
 
     post_file = os.path.join(OLD_POSTS, post_name)
@@ -48,7 +48,7 @@ for post_name in os.listdir(OLD_POSTS):
 
     # make the request
     r = requests.post(
-        "https://dev-jamie.curle.io/api/posts/create",
+        "https://curle-b10g.herokuapp.com/api/posts/create",
         post_data,
         headers=headers,
         verify=False)
