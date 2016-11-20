@@ -13,7 +13,6 @@ node("master"){
     stage("test"){
         sh "mix test"
     }
-}
 //if (env.BRANCH_NAME == "master"){
     stage("deploy"){
         sh "git remote add heroku git@heroku.com:curle-b10g.git || true"
@@ -32,3 +31,4 @@ node("master"){
         sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a jc-b10g"
     }
 //}
+}
