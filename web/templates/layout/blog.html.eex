@@ -10,16 +10,18 @@
     <title></title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <% colour = Map.get(@config, "COLOUR") ||  "#3e3e3e" %>
+    <% name = Map.get(@config, "NAME") ||  "??" %>
     <style>
       a{
-        color: <%= @site.config["COLOUR"] %>;
+        color: <%= colour %>;
       }
       div#id p a{
-        background-color: <%= @site.config["COLOUR"] %>;
+        background-color: <%= colour %>;
       }
 
       body.index div.index a:hover{
-        background-color: <%= @site.config["COLOUR"] %>;
+        background-color: <%= colour %>;
       }
     </style>
   </head>
@@ -28,7 +30,7 @@
 
     <div id="id">
       <p>
-        <a href="/"><%= @site.config["NAME"] %></a>
+        <a href="/"><%= name %></a>
       </p>
     </div>
 

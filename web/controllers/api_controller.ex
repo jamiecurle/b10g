@@ -54,7 +54,6 @@ defmodule B10g.APIController do
   end
 
 	def create(conn, params) do
-		IO.inspect params
 		conn
 		|> put_status(400)
 		|> json(%{status: "error", message: "Missing parameters: title, markdown, slug, status site_id, and inserted are all required"})

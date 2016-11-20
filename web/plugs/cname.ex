@@ -9,9 +9,11 @@ defmodule B10g.CnamePlug do
       {:ok, site} ->
         conn
         |> assign(:site, site)
+        |> assign(:config, site.config)
       {:error, _} ->
         conn
         |> assign(:site, :not_found)
+        |> assign(:config, %{})
     end
   end
 
