@@ -28,7 +28,7 @@ node("master"){
         sh "heroku run mix ecto.migrate"
     }
     stage("version-number"){
-        sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a jc-b10g"
+        sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a curle-b10g"
     }
 //}
 }
