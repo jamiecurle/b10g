@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<% colour = Map.get(@config, "COLOUR") ||  "#3e3e3e" %>
+<% name = Map.get(@config, "NAME") ||  "??" %>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title></title>
+    <title><%= @title || @site.user.name %> </title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-    <% colour = Map.get(@config, "COLOUR") ||  "#3e3e3e" %>
-    <% name = Map.get(@config, "NAME") ||  "??" %>
+
     <style>
       a{
         color: <%= colour %>;
@@ -40,6 +41,7 @@
       </main>
     </div>
 
+    <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 
   </body>

@@ -36,7 +36,7 @@ defmodule B10g.PageController do
 				 |> render(B10g.ErrorView, "404.html", class: "error")
 			post ->
 				conn
-				 |> render("detail.html", post: post, class: "detail")
+				 |> render("detail.html", post: post, class: "detail", title: post.title)
 		end
 
 	end
@@ -51,6 +51,6 @@ defmodule B10g.PageController do
 
 		# render the page out
 		conn
-    	|> render("index.html", posts: posts)
+    	|> render("index.html", posts: posts, title: "All posts")
   end
 end
