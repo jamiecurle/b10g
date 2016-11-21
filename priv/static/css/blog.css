@@ -1,0 +1,238 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body.detail main{
+    padding: 24px;
+    margin: 24px;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+div.index div.DRAFT a{
+    padding: 4px;
+    border-radius: 3px;
+    font-weight: 200;
+    background-color: #fcfcfc;
+}
+
+div.index div.DRAFT a,
+div.index div.DRAFT span{
+    color: #cacaca;
+}
+div.index div.DRAFT p a:hover{
+    background-color: #cacaca;
+}
+div.index div.DRAFT p a:hover,
+div.index div.DRAFT p a:hover span{
+    color: #fff;
+}
+
+div.index div.DRAFT a:before{
+    content: "Draft: ";
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+body.error main{
+    padding: 24px;
+    margin: 24px;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+/*main{*/
+    /*background-size: 100% 24px;*/
+    /*background-image: linear-gradient(to bottom,*/
+        /*#efefef 0%,*/
+        /*transparent 3%,*/
+        /*transparent 100%);*/
+/*}*/
+*{
+    box-sizing: border-box;
+}
+body{
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    color: #2e2e2e;
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin: 24px 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #4e4e4e;
+}
+
+h1{
+    font-size: 42px;
+    line-height: 32px;
+    letter-spacing: -2px;
+}
+h2{
+    font-size: 30px;
+    letter-spacing: -1px;
+    line-height: 24px;
+}
+
+p{
+    margin: 0 0 24px 0;
+}
+a{
+    color: #4A6ABA;
+    padding: 0 2px;
+    display: inline-table;
+    text-decoration: underline;
+}
+
+pre{
+    box-sizing: border-box;
+    padding: 24px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    margin: 24px 0;
+    line-height: 24px;
+    background-color: #F3F4FF;
+    border-radius: 3px;
+    font-family: "Inconsolata", monospace;
+
+
+}
+
+
+img{
+    max-height:  594px;
+    max-width: 100%;
+    border-radius: 3px;
+}
+
+ul, ol{
+    margin: 24px 0;
+    padding-left: 54px;
+    line-height: 32px;
+}
+li{
+    list-style-type: circle;
+}
+ol{
+    list-style-type: decimal;
+}
+
+span.meta{
+    color: #fefefe;
+    padding: 4px;
+    border-radius: 3px;
+    background-color: #cacaca;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+
+hr{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+div#id p{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+div#id p a{
+    width: 50px;
+    height: 50px;
+    display: block;
+    font-size: 12px;
+    line-height: 50px;
+    color: #fff;
+    font-weight: 200;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+}
+div.index span{
+    font-style: italic;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ababab;
+}
+div.index a {
+    background-color: #fff;
+    padding: 24px;
+    margin: 24px;
+    display: block;
+    border-radius: 3px;
+    line-height: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: 0.2s background-color ease-in;
+}
+div.index a:hover,
+div.index a:hover span{
+    color: #fff;
+}
+#id{
+    margin: 24px 24px 0 24px;
+}
+main{
+    width: 720px;
+    border-radius: 3px;
+}
+
+/*# sourceMappingURL=blog.css.map*/
