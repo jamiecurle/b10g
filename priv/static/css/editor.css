@@ -46,8 +46,5 @@ textarea#post_markdown.fullscreen{
     padding: 0 25%;
 }
 
-textarea::input-placeholder{
-    color: #f90;
-}
 
 /*# sourceMappingURL=editor.css.map*/
