@@ -1,6 +1,7 @@
 defmodule B10g.EditorController do
   use B10g.Web, :controller
   alias B10g.Post
+	alias B10g.PostChannel
 
   plug :put_layout, "app.html"
   plug B10g.BrowserAuthPlug
@@ -24,7 +25,11 @@ defmodule B10g.EditorController do
 				cs = Post.changeset(post, post_params)
 
       	case Repo.update(cs) do
-      	  {:ok, _} ->
+      	  {:ok, post} ->
+      	  	# send the change
+      	  	PostChannel.broadcast_change(post)
+
+      	  	# return conn
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
 					{:error, cs} ->

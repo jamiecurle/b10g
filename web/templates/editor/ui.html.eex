@@ -1,35 +1,75 @@
-<%= if @cs.action do %>
-  <div class="alert alert-danger">
-    <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="row">
+
+  <%= if @cs.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+
+  <%= form_for @cs, editor_path(@conn, :update, @post.id), [id: "blog-form"], fn f -> %>
+
+
+  <div class="form-group">
+    <%= label f, :title %>
+    <%= text_input f, :title, class: "form-control" %>
   </div>
-<% end %>
+
+  <div class="form-group">
+    <%= label f, :slug %>
+    <%= text_input f, :slug, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :status %>
+    <%= select f, :status, post_statuses, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="hide icon icon-resize-100" id="not-fullscreen"></span>
+    <span class="icon icon-resize-full-screen" id="fullscreen"></span>
+    <%= label f, :markdown %>
+    <%= textarea f, :markdown, class: "form-control", style: "min-height: 400px" %>
+  </div>
 
 
-<%= form_for @cs, editor_path(@conn, :update, @post.id), fn f -> %>
+  <div class="form-group">
 
+    <%= submit "Submit" , class: "btn btn-primary" %>
 
+  </div>
 
-<div class="form-group">
-  <%= label f, :title %>
-  <%= text_input f, :title, class: "form-control" %>
+  <% end %>
 </div>
 
-<div class="form-group">
-  <%= label f, :slug %>
-  <%= text_input f, :slug, class: "form-control" %>
-</div>
+<script>
 
-<div class="form-group">
-  <%= label f, :status %>
-  <%= select f, :status, post_statuses, class: "form-control" %>
-</div>
+  function toggle(e){
+    // if keydown and escape or a click
+    if ( (e.type == "keydown" && e.keyCode == 27) || e.type == "click"){
+      document.getElementById("not-fullscreen").classList.toggle("hide")
+      document.getElementById("post_markdown").classList.toggle("fullscreen")
+    }
+  }
 
-<div class="form-group">
-  <%= label f, :markdown %>
-  <%= textarea f, :markdown, class: "form-control", style: "min-height: 400px" %>
-</div>
+  function save(e){
 
+    if(e.metaKey && e.keyCode == 83){
+      e.preventDefault(e)
+      var form = document.getElementById('blog-form');
+      var data = new FormData(form);
+      var req = new XMLHttpRequest();
+      req.open("POST", "<%= editor_path(@conn, :update, @post.id) %>");
+      req.send(data);
+    }
+  }
 
+  // maximise and minimise when click
+  document.getElementById("fullscreen").onclick = toggle
+  document.getElementById("not-fullscreen").onclick = toggle
+  document.addEventListener("keydown", toggle, false);
 
-<%= submit "Submit" , class: "btn btn-primary" %>
-<% end %>
+  // save
+  document.addEventListener("keydown", save, false);
+
+</script>

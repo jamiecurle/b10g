@@ -2,14 +2,15 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      //joinTo: "js/app.js"
 
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
-      // joinTo: {
-      //  "js/app.js": /^(web\/static\/js)/,
-      //  "js/vendor.js": /^(web\/static\/vendor)|(deps)/
-      // }
+      joinTo: {
+        "js/editor.js": /^(web\/static\/editor\/js)/,
+        "js/app.js": /^(web\/static\/js)/,
+        "js/vendor.js": /^(web\/static\/vendor)|(deps)/
+      }
       //
       // To change the order of concatenation of files, explicitly mention here
       // order: {
@@ -21,6 +22,7 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
+        "css/editor.css": /^(web\/static\/editor\/css)/,
         "css/blog.css": /^(web\/static\/blog)/,
         "css/app.css": /^(web\/static\/css)/
       },
