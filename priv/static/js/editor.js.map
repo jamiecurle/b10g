@@ -1,0 +1,1 @@
+{"version":3,"sources":["web/static/editor/js/editor.js"],"names":["alert"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAAA,MAAM,KAAN","file":"priv/static/js/editor.js","sourcesContent":["alert('asd');"]}
