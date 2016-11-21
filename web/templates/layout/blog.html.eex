@@ -29,13 +29,15 @@
 
   <body class="<%= assigns[:class] || "index" %>">
 
-    <div id="id">
-      <p>
-        <a href="/"><%= name %></a>
-      </p>
-    </div>
 
     <div class="container">
+      <div id="id">
+        <p>
+          <a href="/"><%= name %></a>
+        </p>
+      </div>
+
+
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>

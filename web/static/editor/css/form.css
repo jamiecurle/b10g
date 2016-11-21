@@ -1,0 +1,51 @@
+textarea,
+input{
+    font-family: 'Roboto', sans-serif;
+}
+
+span.icon{
+    border: 1px solid #434343;
+    padding: 2px;
+    border-radius: 3px;
+    margin-right: 6px;
+    font-size: 18px;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    transition: 0.2s background-color, color ease-in;
+    cursor: pointer;
+}
+
+span.icon.hide{
+    display: none;
+}
+
+span.icon:hover{
+    background-color: #434343;
+    color: #fff;
+}
+
+
+span#not-fullscreen{
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 2000;
+}
+
+
+textarea#post_markdown.fullscreen{
+    font-size: 16px;
+    line-height: 32px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 0 none;
+    top: 0;
+    left: 0;
+    padding: 0 25%;
+}
+
+textarea::input-placeholder{
+    color: #f90;
+}
