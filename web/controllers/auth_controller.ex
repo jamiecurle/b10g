@@ -6,6 +6,18 @@ defmodule B10g.AuthController do
   import B10g.Auth, only: [checkpw: 2, dummy_checkpw: 0]
   import Ecto.Query, only: [from: 2]
 
+
+  def login(conn, %{"email" => email, "password" => password, "next" => next}) do
+    case _auth_with_username_and_password(conn, email, password, conn.assigns[:site], repo: Repo) do
+      {:ok, conn} ->
+        conn
+          |> redirect(to: next)
+      {:error, _reason, conn} ->
+        conn
+          |> render("login.html", errors: true)
+    end
+  end
+
   def login(conn, %{"email" => email, "password" => password}) do
     case _auth_with_username_and_password(conn, email, password, conn.assigns[:site], repo: Repo) do
       {:ok, conn} ->
