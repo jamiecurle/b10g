@@ -15,8 +15,8 @@ config :b10g, B10g.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "jamie.curle.io", port: 80],
   cache_static_manifest: "priv/static/manifest.json",
-	secret_key_base: System.get_env("SECRET_KEY_BASE")
-
+	secret_key_base: System.get_env("SECRET_KEY_BASE"),
+	check_origin: false
 
 # Do not print debug messages in production
 config :logger, level: :info
