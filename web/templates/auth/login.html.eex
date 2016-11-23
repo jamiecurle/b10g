@@ -3,6 +3,9 @@
 
   <form action="#" method="post">
     <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+    <%= if @conn.params["next"] do %>
+        <input type="hidden" name="next" value="<%= @conn.params["next"] %>">
+    <% end %>
     <div class="form-group">
       <label class="" for="email">Email</label>
       <input class="form-control" name="email" type="text" id="email">

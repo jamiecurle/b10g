@@ -6,11 +6,12 @@ defmodule B10g.AuthController do
   import B10g.Auth, only: [checkpw: 2, dummy_checkpw: 0]
   import Ecto.Query, only: [from: 2]
 
+
   def login(conn, %{"email" => email, "password" => password}) do
     case _auth_with_username_and_password(conn, email, password, conn.assigns[:site], repo: Repo) do
       {:ok, conn} ->
         conn
-          |> redirect(to: page_path(conn, :index))
+          |> redirect(to: Map.get(conn.params, "next", page_path(conn, :index)))
       {:error, _reason, conn} ->
         conn
           |> render("login.html", errors: true)

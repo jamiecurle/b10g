@@ -128,6 +128,7 @@ h2{
 p{
     margin: 0 0 24px 0;
 }
+
 a{
     color: #4A6ABA;
     padding: 0 2px;
@@ -234,6 +235,21 @@ div.index a:hover span{
 main{
     width: 720px;
     border-radius: 3px;
+}
+b, strong{
+    font-weight: 800;
+}
+i, em{
+    font-style: italic;
+}
+
+blockquote{
+    border-left: 4px solid #ececec;
+    padding-left: 20px;
+    font-style: italic;
+    color: #6a6a6a;
+    line-height: 32px;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 /*# sourceMappingURL=blog.css.map*/
