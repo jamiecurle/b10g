@@ -8,11 +8,10 @@ defmodule B10g.AuthController do
 
 
   def login(conn, %{"email" => email, "password" => password}) do
-    next = Map.get(conn.params, "next", page_path(conn, :index))
     case _auth_with_username_and_password(conn, email, password, conn.assigns[:site], repo: Repo) do
       {:ok, conn} ->
         conn
-          |> redirect(to: next)
+          |> redirect(to: Map.get(conn.params, "next", page_path(conn, :index)))
       {:error, _reason, conn} ->
         conn
           |> render("login.html", errors: true)

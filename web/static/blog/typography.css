@@ -1,0 +1,15 @@
+b, strong{
+    font-weight: 800;
+}
+i, em{
+    font-style: italic;
+}
+
+blockquote{
+    border-left: 4px solid #ececec;
+    padding-left: 20px;
+    font-style: italic;
+    color: #6a6a6a;
+    line-height: 32px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
