@@ -2,6 +2,7 @@
 <html lang="en">
 <% colour = Map.get(@config, "COLOUR") ||  "#3e3e3e" %>
 <% name = Map.get(@config, "NAME") ||  "??" %>
+<% post = Map.get(@conn.assigns, :post) ||  nil %>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,13 +15,13 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
     <style>
+      div#menu a:hover,
       a{
         color: <%= colour %>;
       }
-      div#id p a{
-        background-color: <%= colour %>;
-      }
-
+      div#id p label,
+      div#id p a,
+      div#menu,
       body.index div.index a:hover{
         background-color: <%= colour %>;
       }
@@ -29,11 +30,30 @@
 
   <body class="<%= assigns[:class] || "index" %>">
 
+  <%= if @conn.assigns[:current_user] do %>
+    <input type="checkbox" id="menu-toggle">
+    <div id="menu">
+      <nav>
+        <a href="/">Index</a>
+        <a href="<%= editor_path(@conn, :create) %>">Create New Post</a>
+        <a href="#">Settings</a>
+
+
+        <%= if post do %>
+        <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit this post</a>
+        <% end %>
+      </nav>
+    </div>
+  <% end %>
 
     <div class="container">
       <div id="id">
         <p>
-          <a href="/"><%= name %></a>
+          <%= if @conn.assigns[:current_user] do %>
+            <label for="menu-toggle"><%= name %></label>
+          <% else %>
+            <a href="/"><%= name %></a>
+          <% end %>
         </p>
       </div>
 
