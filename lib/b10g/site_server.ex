@@ -17,7 +17,7 @@ defmodule B10g.SiteServer do
   end
 
   def init (_) do
-      {:ok, Repo.all(Site)}
+      {:ok, Repo.all(Site) |> Repo.preload([:user])}
   end
 
   def handle_call({:reload}, _from, _sites) do

@@ -1,0 +1,32 @@
+/* the checkbox */
+#menu-toggle{
+    display: none;
+}
+
+div#menu{
+    width: 300px;
+    box-sizing: border-box;
+    height: 100%;
+    top: 0;
+    right: -300px;
+    position: absolute;
+    background-color: #1bc98e;
+    transition: 0.2s right ease-out;
+}
+
+div#menu a{
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    width: 100%;
+    padding: 12px 24px;
+    transition: 0.2s background-color ease-in;
+}
+div#menu a:hover{
+    background-color: #fff;
+}
+
+#menu-toggle:checked ~ div#menu{
+    right: 0;
+}
