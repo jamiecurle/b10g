@@ -16,6 +16,14 @@ defmodule B10g.AuthControllerTest do
     {:ok, user: user, site: site, good_conn: good_conn, bad_conn: conn, url: url}
   end
 
+  test "POST /login/auth valid redirects to next", %{good_conn: good_conn, url: url} do
+    # there is already a user with the default credentials
+    conn = post(good_conn, url, %{email: "foo@bar.baz", password: "househouse", next: "/foo"})
+    assert redirected_to(conn) == "/foo"
+    assert conn.status == 302
+  end
+
+
 	test "login to a host that is not found is 404", %{url: url} do
     assert 404 == get(build_conn, url).status
 	end
