@@ -46,4 +46,35 @@ textarea#post_markdown.fullscreen{
 }
 
 
+/* now the dragzone stuff */
+
+div#drop-target{
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    height: 100%;
+    width: 100%;
+    z-index: -100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+div#drop-target.active{
+    display: flex;
+    position: fixed;
+    z-index: 5000;
+}
+
+div#drop-target div{
+    border: 5px solid #3e3e3e;
+    border-style: dotted;
+    border-radius: 10px;
+    padding: 64px;
+    text-transform: uppercase;
+    font-size: 32px;
+    color: #efefef;
+    position: fixed;
+    z-index: 4999;
+}
+
 /*# sourceMappingURL=editor.css.map*/

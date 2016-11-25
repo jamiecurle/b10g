@@ -40,10 +40,52 @@
   </div>
 
   <% end %>
+
+  <div id="drop-target" class="active">
+    <div>
+      Drop files to upload
+    </div>
+  </div>
 </div>
 
 <script>
+  // shortcuts
 
+  /* the upload stuff */
+
+  function handleDragOver(e) {
+    //console.log("dragover")
+  }
+
+  function handleDrop(e){
+    console.log(e.dataTransfer.files)
+    e.preventDefault();
+    alert('whoop');
+  }
+
+  function activateDragUI(e){
+    document.getElementById("drop-target").classList.add("active")
+  }
+  function deactivateDragUI(e){
+    document.getElementById("drop-target").classList.remove("active")
+  }
+
+
+  // the drag ui
+  //document.ondragover = activateDragUI;
+  //document.addEventListener("dragdrop", deactivateDragUI, false)
+
+
+  // attach to the upload listeners
+  document.getElementById("drop-target").ondragleave = deactivateDragUI;
+  document.getElementById("drop-target").ondragover = handleDragOver;
+  document.getElementById("drop-target").ondrop = handleDrop;
+
+
+  /* end drag stuff */
+
+
+  /* the fullscreen stuff */
   function toggle(e){
     // if keydown and escape or a click
     if ( (e.type == "keydown" && e.keyCode == 27) || e.type == "click"){

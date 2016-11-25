@@ -9,7 +9,7 @@ div#menu{
     height: 100%;
     top: 0;
     right: -300px;
-    position: absolute;
+    position: fixed;
     background-color: #1bc98e;
     transition: 0.2s right ease-out;
 }
