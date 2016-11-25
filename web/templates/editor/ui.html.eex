@@ -41,7 +41,7 @@
 
   <% end %>
 
-  <div id="drop-target" class="active">
+  <div id="drop-target" class="">
     <div>
       Drop files to upload
     </div>
@@ -55,6 +55,7 @@
 
   function handleDragOver(e) {
     //console.log("dragover")
+    return false; // << this is very important: http://stackoverflow.com/a/39988489
   }
 
   function handleDrop(e){
@@ -71,13 +72,11 @@
   }
 
 
-  // the drag ui
-  //document.ondragover = activateDragUI;
-  //document.addEventListener("dragdrop", deactivateDragUI, false)
-
+  // the drag ui is activated on the body and deactivated when leaving the target
+  document.ondragover = activateDragUI;
+  document.getElementById("drop-target").ondragleave = deactivateDragUI;
 
   // attach to the upload listeners
-  document.getElementById("drop-target").ondragleave = deactivateDragUI;
   document.getElementById("drop-target").ondragover = handleDragOver;
   document.getElementById("drop-target").ondrop = handleDrop;
 
