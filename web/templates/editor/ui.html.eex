@@ -49,9 +49,61 @@
 </div>
 
 <script>
-  // shortcuts
 
-  /* the upload stuff */
+  // alias document.getElementById
+  $id = function(id){
+    return document.getElementById(id);
+  }
+
+  // for dragging events
+  function handleDragOver(e){
+    console.log("over")
+    $id("post_markdown").classList.add("drag");
+  }
+
+  function handleLeave(e){
+    $id("post_markdown").classList.remove("drag");
+  }
+
+  function handleDrop(e){
+    $id("post_markdown").classList.remove("drag");
+    handleFileUpload(e.dataTransfer.files)
+    return false; // << needs to be there
+  }
+  // end dragging events
+
+  // for paste event
+  function handlePaste(e){
+    var blob = e.clipboardData.items[0].getAsFile();
+    switch (blob){
+      case null:
+        break;
+      default:
+        blob.name = Math.random().toString(36).substring(7) + ".png"
+        return handleFileUpload([blob])
+    }
+  }
+  // end paste events
+
+  // start file upload handlers
+  function handleFileUpload(files){
+    console.log(files)
+    for(var i = 0; i < files.length; i++)
+      console.log(files[i])
+  }
+
+
+  // end file upload handlers
+
+  // register handlers
+  $id("post_markdown").ondragover = handleDragOver;
+  $id("post_markdown").ondragleave = handleLeave;
+  $id("post_markdown").ondrop = handleDrop;
+  $id("post_markdown").onpaste = handlePaste;
+  // end register handlers
+
+
+  /* the upload stuff - first pass with overlay * /
 
   function handleDragOver(e) {
     //console.log("dragover")
@@ -81,7 +133,7 @@
   document.getElementById("drop-target").ondrop = handleDrop;
 
 
-  /* end drag stuff */
+  / * end drag stuff */
 
 
   /* the fullscreen stuff */

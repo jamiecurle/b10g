@@ -33,19 +33,33 @@ span#not-fullscreen{
     z-index: 2000;
 }
 
+
+
+
 textarea#post_markdown.fullscreen{
     font-size: 16px;
     line-height: 32px;
     width: 100%;
     height: 100%;
     position: absolute;
-    border: 0 none;
+    border: 1px solid #fff;
     top: 0;
     left: 0;
     padding: 0 25%;
+    resize: none;
 }
 
 
+
+/* second pass image upload */
+#post_markdown.drag{
+    box-shadow: inset 0 0 10px #3e3e3e;
+}
+
+
+
+
+/* first pass image upload */
 /* now the dragzone stuff */
 
 div#drop-target{
