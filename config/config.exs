@@ -22,6 +22,14 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+
+# Configure aws
+config :b10g, :aws,
+  aws_bucket: "b10g",
+  region: "eu-west-1",
+  access_key_id: "AKIAIKBVSQGHZY6TAHDQ",
+  secret_access_key: "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"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

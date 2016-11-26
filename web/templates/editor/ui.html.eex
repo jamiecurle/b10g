@@ -49,15 +49,25 @@
 </div>
 
 <script>
+  /* start utils */
+  // CSRF protection
+  window.csrf_token = "<%= get_csrf_token() %>"
+  window.post_id = "<%= @post.id %>"
 
   // alias document.getElementById
   $id = function(id){
     return document.getElementById(id);
   }
 
+  function random_string(){
+    return Math.random().toString(36).substring(7)
+  }
+
+  /* end utils */
+
   // for dragging events
   function handleDragOver(e){
-    console.log("over")
+//    console.log("over")
     $id("post_markdown").classList.add("drag");
   }
 
@@ -67,7 +77,10 @@
 
   function handleDrop(e){
     $id("post_markdown").classList.remove("drag");
-    handleFileUpload(e.dataTransfer.files)
+    handleFileUpload(e.dataTransfer.files[0])
+    if (e.dataTransfer.files.length > 1){
+      console.log("only one upload allowed for now....")
+    }
     return false; // << needs to be there
   }
   // end dragging events
@@ -79,17 +92,98 @@
       case null:
         break;
       default:
-        blob.name = Math.random().toString(36).substring(7) + ".png"
-        return handleFileUpload([blob])
+        blob.name = random_string() + ".png"
+        return handleFileUpload(blob)
     }
   }
   // end paste events
 
   // start file upload handlers
-  function handleFileUpload(files){
-    console.log(files)
-    for(var i = 0; i < files.length; i++)
-      console.log(files[i])
+  /*
+    - handleFileUpload
+    - handleS3Upload
+      - insertPlaceholderMarkdown
+         - getSelection
+      - uploadfile
+        - updatePlaceholderMarkdown
+
+
+  */
+
+
+  function insertPlaceholderMarkdown(file){
+    // make markdown
+    var md = "![Uploading " +  file.name + "]()"
+
+    // get cursor position
+    var cursor = $id("post_markdown").selectionEnd
+
+    // get start and finish
+    var start_text  = $id("post_markdown").value.slice(0, cursor),
+        end_text = $id("post_markdown").value.slice(cursor)
+
+    // update the text
+    $id("post_markdown").value = start_text + "\n" + md + "\n" + end_text;
+
+    // return the
+    return md
+  }
+
+  function handleS3upload(url_data, file){
+
+    // write in the markdown store it in tmp_md
+    var tmp_md = insertPlaceholderMarkdown(file)
+
+    // make the final markdown
+    var final_md = "![" + file.name + "](" + url_data.url + ")"
+
+    // make an xhr
+    var req = new XMLHttpRequest()
+
+    // upload to s3
+
+    // these need to be set before we open the request
+//    req.upload.addEventListener('progress', editor.uploadProgress, false);
+//    req.upload.addEventListener('load', editor.uploadComplete, false);
+//    req.upload.addEventListener('error', editor.uploadError, false);
+
+    // open the request
+    req.open('PUT', url_data.signed_url);
+
+    // set the headers
+    req.setRequestHeader('content-type', file.type);
+    req.setRequestHeader('x-amz-acl', 'public-read');
+
+    // send the file
+    req.send(file);
+
+    // When it's done, update the markdown
+    req.onreadystatechange = function(e) {
+      if (req.readyState == XMLHttpRequest.DONE && req.status == 200) {
+        $id("post_markdown").value = $id("post_markdown").value.replace(tmp_md, final_md)
+      }
+    }
+
+  }
+
+
+  function handleFileUpload(file) {
+
+      var req = new XMLHttpRequest()
+
+      req.open("POST", "/editor/_sign/")
+      req.setRequestHeader("x-csrf-token", window.csrf_token)
+      req.setRequestHeader("x-post-id", window.post_id)
+      req.setRequestHeader("x-filename", file.name)
+      req.setRequestHeader("x-filetype", file.type)
+      req.send()
+      req.onreadystatechange = function(e){
+        if (req.readyState == XMLHttpRequest.DONE && req.status == 200) {
+          // parse response into json
+          url = JSON.parse(req.responseText)
+          handleS3upload(url, file)
+        }
+      }
   }
 
 
