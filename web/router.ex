@@ -26,6 +26,7 @@ defmodule B10g.Router do
   scope "/editor", B10g do
     pipe_through :browser
 
+    post "/_sign/", EditorController, :sign
     get "/create", EditorController, :create
     get "/ui/:id", EditorController, :ui
     put "/update/:id", EditorController, :update

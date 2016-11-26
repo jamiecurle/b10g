@@ -6,6 +6,54 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.BrowserAuthPlug
 
+	def sign(conn, _params) do
+
+    # get the filename
+    src_filename = Plug.Conn.get_req_header(conn, "x-filename")
+               |> List.first()
+
+    # get the post id
+    post_id = Plug.Conn.get_req_header(conn, "x-post-id")
+                |> List.first()
+
+    # The filename <site.id>/<post.id>/filename. Me three years now from thanks me
+    filename = "#{conn.assigns[:site].id}/#{post_id}/#{src_filename}"
+
+    # get the mimetype
+    mimetype = Plug.Conn.get_req_header(conn, "x-filetype")
+               |> List.first()
+
+    # config
+    config = Application.get_env(:b10g, :aws)
+
+    # the url - 3-eu-west-1.amazonaws.com
+    url = "https://#{config[:aws_bucket]}.s3-eu-west-1.amazonaws.com/#{filename}"
+
+
+    # make the headers
+    headers = Map.new
+              |> Map.put("x-amz-acl", "public-read")
+              |> Map.put("content-type", mimetype)
+
+    # make the url and data
+    signed_url = AWSAuth.sign_url(
+        config[:access_key_id],
+        config[:secret_access_key],
+        "PUT",
+        url,
+        config[:region],
+        "s3",
+        headers)
+
+    #  now make the data
+    data = %{signed_url: signed_url,
+            url: url,
+            headers: headers}
+
+    # return the data
+    json(conn, data)
+	end
+
 
   def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post

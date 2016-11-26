@@ -40,10 +40,197 @@
   </div>
 
   <% end %>
+
+  <div id="drop-target" class="">
+    <div>
+      Drop files to upload
+    </div>
+  </div>
 </div>
 
 <script>
+  /* start utils */
+  // CSRF protection
+  window.csrf_token = "<%= get_csrf_token() %>"
+  window.post_id = "<%= @post.id %>"
 
+  // alias document.getElementById
+  $id = function(id){
+    return document.getElementById(id);
+  }
+
+  function random_string(){
+    return Math.random().toString(36).substring(7)
+  }
+
+  /* end utils */
+
+  // for dragging events
+  function handleDragOver(e){
+//    console.log("over")
+    $id("post_markdown").classList.add("drag");
+  }
+
+  function handleLeave(e){
+    $id("post_markdown").classList.remove("drag");
+  }
+
+  function handleDrop(e){
+    $id("post_markdown").classList.remove("drag");
+    handleFileUpload(e.dataTransfer.files[0])
+    if (e.dataTransfer.files.length > 1){
+      console.log("only one upload allowed for now....")
+    }
+    return false; // << needs to be there
+  }
+  // end dragging events
+
+  // for paste event
+  function handlePaste(e){
+    var blob = e.clipboardData.items[0].getAsFile();
+    switch (blob){
+      case null:
+        break;
+      default:
+        blob.name = random_string() + ".png"
+        return handleFileUpload(blob)
+    }
+  }
+  // end paste events
+
+  // start file upload handlers
+  /*
+    - handleFileUpload
+    - handleS3Upload
+      - insertPlaceholderMarkdown
+         - getSelection
+      - uploadfile
+        - updatePlaceholderMarkdown
+
+
+  */
+
+
+  function insertPlaceholderMarkdown(file){
+    // make markdown
+    var md = "![Uploading " +  file.name + "]()"
+
+    // get cursor position
+    var cursor = $id("post_markdown").selectionEnd
+
+    // get start and finish
+    var start_text  = $id("post_markdown").value.slice(0, cursor),
+        end_text = $id("post_markdown").value.slice(cursor)
+
+    // update the text
+    $id("post_markdown").value = start_text + "\n" + md + "\n" + end_text;
+
+    // return the
+    return md
+  }
+
+  function handleS3upload(url_data, file){
+
+    // write in the markdown store it in tmp_md
+    var tmp_md = insertPlaceholderMarkdown(file)
+
+    // make the final markdown
+    var final_md = "![" + file.name + "](" + url_data.url + ")"
+
+    // make an xhr
+    var req = new XMLHttpRequest()
+
+    // upload to s3
+
+    // these need to be set before we open the request
+//    req.upload.addEventListener('progress', editor.uploadProgress, false);
+//    req.upload.addEventListener('load', editor.uploadComplete, false);
+//    req.upload.addEventListener('error', editor.uploadError, false);
+
+    // open the request
+    req.open('PUT', url_data.signed_url);
+
+    // set the headers
+    req.setRequestHeader('content-type', file.type);
+    req.setRequestHeader('x-amz-acl', 'public-read');
+
+    // send the file
+    req.send(file);
+
+    // When it's done, update the markdown
+    req.onreadystatechange = function(e) {
+      if (req.readyState == XMLHttpRequest.DONE && req.status == 200) {
+        $id("post_markdown").value = $id("post_markdown").value.replace(tmp_md, final_md)
+      }
+    }
+
+  }
+
+
+  function handleFileUpload(file) {
+
+      var req = new XMLHttpRequest()
+
+      req.open("POST", "/editor/_sign/")
+      req.setRequestHeader("x-csrf-token", window.csrf_token)
+      req.setRequestHeader("x-post-id", window.post_id)
+      req.setRequestHeader("x-filename", file.name)
+      req.setRequestHeader("x-filetype", file.type)
+      req.send()
+      req.onreadystatechange = function(e){
+        if (req.readyState == XMLHttpRequest.DONE && req.status == 200) {
+          // parse response into json
+          url = JSON.parse(req.responseText)
+          handleS3upload(url, file)
+        }
+      }
+  }
+
+
+  // end file upload handlers
+
+  // register handlers
+  $id("post_markdown").ondragover = handleDragOver;
+  $id("post_markdown").ondragleave = handleLeave;
+  $id("post_markdown").ondrop = handleDrop;
+  $id("post_markdown").onpaste = handlePaste;
+  // end register handlers
+
+
+  /* the upload stuff - first pass with overlay * /
+
+  function handleDragOver(e) {
+    //console.log("dragover")
+    return false; // << this is very important: http://stackoverflow.com/a/39988489
+  }
+
+  function handleDrop(e){
+    console.log(e.dataTransfer.files)
+    e.preventDefault();
+    alert('whoop');
+  }
+
+  function activateDragUI(e){
+    document.getElementById("drop-target").classList.add("active")
+  }
+  function deactivateDragUI(e){
+    document.getElementById("drop-target").classList.remove("active")
+  }
+
+
+  // the drag ui is activated on the body and deactivated when leaving the target
+  document.ondragover = activateDragUI;
+  document.getElementById("drop-target").ondragleave = deactivateDragUI;
+
+  // attach to the upload listeners
+  document.getElementById("drop-target").ondragover = handleDragOver;
+  document.getElementById("drop-target").ondrop = handleDrop;
+
+
+  / * end drag stuff */
+
+
+  /* the fullscreen stuff */
   function toggle(e){
     // if keydown and escape or a click
     if ( (e.type == "keydown" && e.keyCode == 27) || e.type == "click"){
