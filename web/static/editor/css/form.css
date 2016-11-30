@@ -1,3 +1,26 @@
+html,
+body{
+    height: 100%;
+}
+div.parent{
+    display: flex;
+    height: 100%;
+}
+
+iframe, div.form{
+    width: 50%;
+    border:0 none;
+}
+
+iframe{
+    border-right: 5px solid #cacaca;
+    max-width: 720px;
+}
+div.form{
+    padding: 24px;
+}
+
+/* end layout stuff */
 textarea,
 input{
     font-family: 'Roboto', sans-serif;
