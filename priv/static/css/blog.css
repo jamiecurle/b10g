@@ -235,8 +235,32 @@ div.index a:hover span{
     margin: 24px 24px 0 24px;
 }
 main{
-    width: 720px;
+    max-width: 720px;
     border-radius: 3px;
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+    main,
+    body.detail main{
+        padding: 12px;
+        margin: 12px;
+    }
+    main div.index a{
+        padding: 12px;
+        margin: 12px;
+    }
+
+    h1{
+        font-size: 24px;
+        line-height: 20px;
+        letter-spacing: -1px;
+    }
+    h2{
+        font-size: 20px;
+        line-height: 24px;
+    }
 }
 /* the checkbox */
 #menu-toggle{
