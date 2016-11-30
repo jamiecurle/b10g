@@ -1,7 +1,7 @@
 
 
 <div class="parent">
-  <iframe src="https://dev-jamie.curle.io/icy-sky-7147">
+  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>">
 
   </iframe>
   <div class="form">
