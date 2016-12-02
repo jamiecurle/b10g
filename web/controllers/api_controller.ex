@@ -3,7 +3,6 @@
 	alias B10g.Post
 
 	def create(conn, %{"title" => title, "markdown" => markdown, "slug" => slug,"status" => status,"site_id" => site_id,"inserted_at" => inserted_at}) do
-p
 		# TODO: clear this up
 		# make sure we cannot insert posts for other peoples blogs
     site_ids = Enum.map(
