@@ -16,6 +16,7 @@ node("master"){
 
     stage("build docker image"){
         sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
+        sh "gcloud docker -- push gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
     }
 
     if (env.BRANCH_NAME == "master"){
