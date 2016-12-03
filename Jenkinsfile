@@ -13,6 +13,10 @@ node("master"){
     stage("test"){
         sh "mix test"
     }
+
+    stage("build docker image"){
+        sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse` ."
+    }
     if (env.BRANCH_NAME == "master"){
       stage("deploy"){
           sh "git remote add heroku git@heroku.com:curle-b10g.git || true"
