@@ -41,7 +41,7 @@ node("master"){
         }
 
         stage("update deployment"){
-            sh "kubectl set image deployment/b10g-app b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
+            sh "kubectl set image deployment/b10g b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD` --namespace=b10g"
         }
     }
 }
