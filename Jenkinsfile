@@ -23,15 +23,24 @@ node("master"){
             sh "git pull heroku master || true"
             sh "git push heroku master"
         }
-        stage("build docker image"){
-            sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
-            sh "gcloud docker -- push gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
-        }
+
         stage("migrate"){
             sh "heroku run mix ecto.migrate"
         }
+
         stage("version-number"){
             sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a curle-b10g"
+        }
+
+        stage("build docker image"){
+            sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
+        }
+
+        stage("push docker image"){
+            sh "gcloud docker -- push gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
+        }
+
+        stage("update deployment"){
             sh "kubectl set image deployment/b10g-app b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
         }
     }
