@@ -33,7 +33,8 @@ defmodule B10g.PageController do
 		case post do
 		  nil ->
 				conn
-				 |> render(B10g.ErrorView, "404.html", class: "error")
+				 |> put_layout("error.html")
+				 |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
 			post ->
 				conn
 				 |> render("detail.html", post: post, class: "detail", title: post.title)
