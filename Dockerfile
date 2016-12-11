@@ -31,7 +31,6 @@ COPY priv /app/priv/
 
 RUN mix compile
 RUN mix phoenix.digest
-RUN mix ecto.migrate
 
 #ARG GITHASH
 #ARG CLOUDFRONT_ADD
@@ -40,4 +39,4 @@ RUN mix ecto.migrate
 
 ENV PORT=8080
 
-ENTRYPOINT elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
+ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
