@@ -25,4 +25,5 @@ RUN mix phoenix.digest
 
 ENV PORT=8080
 
-ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
+ENTRYPOINT mix ecto.migrate && mix phoenix.server
+#ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
