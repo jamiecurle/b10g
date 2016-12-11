@@ -31,6 +31,7 @@ COPY priv /app/priv/
 
 RUN mix compile
 RUN mix phoenix.digest
+RUN mix ecto.migrate
 
 #ARG GITHASH
 #ARG CLOUDFRONT_ADD
