@@ -32,7 +32,7 @@ node("master"){
         }
     }
 
-    if (env.BRANCH_NAME == "gce"){
+    if (env.BRANCH_NAME == "master"){
 
         stage("build docker image"){
             sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
@@ -43,7 +43,7 @@ node("master"){
         }
 
         stage("update deployment"){
-            sh "kubectl set image deployment/b10g b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD` --namespace=b10g"
+            sh "kubectl set image deployment/b10g b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
         }
     }
 }
