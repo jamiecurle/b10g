@@ -15,7 +15,7 @@ node("master"){
     }
 
 
-    if (env.BRANCH_NAME == "master"){
+    if (env.BRANCH_NAME == "heroku"){
         stage("deploy"){
             sh "git remote add heroku git@heroku.com:curle-b10g.git || true"
             sh "git checkout master"
@@ -23,7 +23,6 @@ node("master"){
             sh "git pull heroku master || true"
             sh "git push heroku master"
         }
-
         stage("migrate"){
             sh "heroku run mix ecto.migrate"
         }
@@ -31,6 +30,9 @@ node("master"){
         stage("version-number"){
             sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a curle-b10g"
         }
+    }
+
+    if (env.BRANCH_NAME == "gce"){
 
         stage("build docker image"){
             sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
