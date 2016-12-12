@@ -81,6 +81,7 @@ defmodule B10g.EditorController do
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
 					{:error, cs} ->
+					  IO.inspect cs
 						conn
 						|> render("ui.html", post: post, cs: cs)
       	end
