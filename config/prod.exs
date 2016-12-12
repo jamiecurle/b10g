@@ -70,6 +70,6 @@ config :logger, level: :info
 # Configure your database
 config :b10g, B10g.Repo,
   adapter: Ecto.Adapters.MySQL,
-  username: System.get_env("DATABASE_USERNAME"),
-  password: System.get_env("DATABASE_PASSWORD"),
+  username: System.get_env("prodDbUsername"),
+  password: System.get_env("prodDbPassword"),
   database: "b10g_production"
