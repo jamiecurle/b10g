@@ -75,8 +75,8 @@ defmodule B10g.EditorController do
       	case Repo.update(cs) do
       	  {:ok, post} ->
       	  	# send the change
-      	  	PostChannel.broadcast_change(post)
-
+      	  	a = PostChannel.broadcast_change(post)
+            IO.inspect a
       	  	# return conn
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
