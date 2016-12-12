@@ -70,7 +70,8 @@ config :logger, level: :info
 # Configure your database
 config :b10g, B10g.Repo,
   adapter: Ecto.Adapters.MySQL,
-
+	hostname: "127.0.0.1",
+	port: "3306",
   username: System.get_env("DATABASE_USERNAME"),
   password: System.get_env("DATABASE_PASSWORD"),
   database: "b10g_production"
