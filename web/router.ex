@@ -45,6 +45,7 @@ defmodule B10g.Router do
   scope "/", B10g do
     pipe_through :browser
 
+    get "/healthz", PageController, :healthz
     get "/posts/:identifer", PageController, :redirecter
     get "/:identifer", PageController, :detail
     get "/", PageController, :index

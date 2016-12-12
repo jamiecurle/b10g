@@ -4,6 +4,11 @@ defmodule B10g.PageController do
 
   plug :put_layout, "blog.html"
 
+  def healthz(conn, _params) do
+    conn
+    |> text("k")
+  end
+
 	def redirecter(conn, %{"identifer" => identifer}) do
 		# now get the post
 		post = Post
