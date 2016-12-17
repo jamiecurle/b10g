@@ -14,7 +14,6 @@ node("master"){
         sh "mix test"
     }
 
-
     if (env.BRANCH_NAME == "master"){
 
         stage("build docker image"){
