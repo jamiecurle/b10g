@@ -35,7 +35,9 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :b10g, B10g.Repo,
-  adapter: Ecto.Adapters.MySQL,
-  username: "root",
-  password: "house",
-  database: "b10g_dev"
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "b10g_dev",
+  hostname: "localhost",
+  pool_size: 10

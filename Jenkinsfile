@@ -15,17 +15,20 @@ node("master"){
     }
 
     if (env.BRANCH_NAME == "master"){
-
-        stage("build docker image"){
-            sh "docker build -t gcr.io/curle-blog/b10g:`git rev-parse HEAD` ."
+        stage("deploy"){
+            sh "git remote add heroku git@heroku.com:curle-b10g.git || true"
+            sh "git checkout master"
+            sh "git pull origin master"
+            sh "git pull heroku master || true"
+            sh "git push heroku master"
         }
 
-        stage("push docker image"){
-            sh "gcloud docker -- push gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
+        stage("migrate"){
+            sh "heroku run mix ecto.migrate"
         }
 
-        stage("update deployment"){
-            sh "kubectl set image deployment/b10g b10g=gcr.io/curle-blog/b10g:`git rev-parse HEAD`"
+        stage("version-number"){
+            sh "heroku config:set VERSION=\$((1 + `heroku config:get VERSION  -a curle-b10g`)) -a curle-b10g"
         }
     }
 }
