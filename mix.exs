@@ -19,7 +19,7 @@ defmodule B10g.Mixfile do
   def application do
     [mod: {B10g, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex, :timex, :timex_ecto, :comeonin]]
+                    :phoenix_ecto, :postgrex, :timex, :timex_ecto, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
