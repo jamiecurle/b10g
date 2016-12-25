@@ -2,26 +2,22 @@ defmodule B10g.AcmeController do
 	use B10g.Web, :controller
 
   defp get_key(token) do
-    Enum.reduce(
-      0..3,
-      fn (x, acc)->
-        IO.inspect acc
-        case System.get_env("ACME_TOKEN_" <> "#{x}") == token do
-          true ->
-            [System.get_env("ACME_KEY_" <> "#{x}")]
-          _ ->
-            []
-        end
-      end) |> List.first
+
+    # function to determine if token exist
+    token_exists? = fn(x, token)-> System.get_env("ACME_TOKEN_" <> "#{x}") == token end
+
+    # if it exists, return the key
+    x = for x <- 0..50, token_exists?.(x, token),  do: System.get_env("ACME_KEY_" <> "#{x}")
   end
 
   def validate(conn, %{"token" => token}) do
+    IO.inspect get_key(token)
     case get_key(token) do
-      nil ->
+      [] ->
         conn
         |> put_status(:not_found)
         |> text("not found")
-      key ->
+      [key] ->
         conn
         |> text(key)
     end
