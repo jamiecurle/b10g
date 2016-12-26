@@ -6,6 +6,9 @@ defmodule B10g do
   def start(_type, _args) do
     import Supervisor.Spec
 
+		# periodically remove drafts
+		:timer.apply_interval(:timer.seconds(3600), B10g.Delete, :delete, [])
+
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository

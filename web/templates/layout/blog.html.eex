@@ -38,10 +38,10 @@
         <a href="<%= editor_path(@conn, :create) %>">Create New Post</a>
         <a href="#">Settings</a>
 
-
         <%= if post do %>
-        <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit this post</a>
+          <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit this post</a>
         <% end %>
+
       </nav>
     </div>
   <% end %>
