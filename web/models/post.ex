@@ -13,6 +13,7 @@ defmodule B10g.Post do
     field :slug, :string
     field :markdown, :string
     field :status, :string, default: "DRAFT"
+    field :deleted, :boolean, default: false
 
     belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
@@ -21,7 +22,7 @@ defmodule B10g.Post do
   end
 
   @required_fields ~w(title slug markdown site_id user_id status)
-  @optional_fields ~w(inserted_at updated_at)
+  @optional_fields ~w(inserted_at updated_at deleted)
 
 	def valid_statuses, do: @post_status
 
@@ -53,12 +54,14 @@ defmodule B10g.Post do
 	  from p in query,
 	  	where: p.site_id == ^site.id,
 	  	where: p.status == "PUBLISHED",
+	  	where: p.deleted == false,
 	  	preload: [:user, :site]
 	end
 
 	def filter(query, site, user) when not is_nil(user) do
 	  from p in query,
 	  	where: p.site_id == ^site.id,
+	  	where: p.deleted == false,
 	  	preload: [:user, :site]
 	end
 
@@ -68,13 +71,11 @@ defmodule B10g.Post do
 	"""
 	def get(query, identifier)
 
-
 	def get(query, identifer) when is_binary(identifer) do
 		from p in query,
 			where: p.slug == ^identifer,
 	  	preload: [:user, :site]
 	end
-
 
 	def get(query, identifer) when is_integer(identifer) do
 		from p in query,
@@ -88,7 +89,7 @@ defmodule B10g.Post do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_required([:title, :markdown, :slug, :status])
+    |> validate_required([:title, :markdown, :slug, :status, :deleted])
     |> unique_constraint(:site_id_slug)
     |> validate_status()
 		|> markdown()

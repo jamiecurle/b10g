@@ -76,12 +76,10 @@ defmodule B10g.EditorController do
       	  {:ok, post} ->
       	  	# send the change
       	  	a = PostChannel.broadcast_change(post)
-            IO.inspect a
       	  	# return conn
 						conn
 						|> redirect(to: editor_path(conn, :ui, id))
 					{:error, cs} ->
-					  IO.inspect cs
 						conn
 						|> render("ui.html", post: post, cs: cs)
       	end
