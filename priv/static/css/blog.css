@@ -86,6 +86,23 @@ body.error main{
     border-radius: 3px;
     background-color: #fff;
 }
+div.footnotes{
+    border: 1px solid red;
+}
+#post-body div.footnotes ol{
+    padding-left: 24px;
+    font-size: 12px;
+    font-style: italic;
+}
+#post-body div.footnotes ol li{
+    list-style-type: decimal;
+}
+a.footnote{
+    font-size: 12px;
+    font-weight: 900;
+    text-decoration: underline;
+    vertical-align: super;
+}
 
 /*main{*/
     /*background-size: 100% 24px;*/

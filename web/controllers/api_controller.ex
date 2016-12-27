@@ -18,7 +18,6 @@
 		  parsed_site_id
 		end
 
-
     case Enum.member?(site_ids, site_id) do
       true ->
         # make changeset
