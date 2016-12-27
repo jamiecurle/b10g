@@ -1,11 +1,10 @@
 
-
 <span class="meta">
   <%= ui_time @post.inserted_at %>
 </span>
 
 
-<h1><%= @post.title %> </h1>
+<h1 id="post-title"><%= @post.title %> </h1>
 
 
 <div data-id="<%= @post.id %>" id="post-body">
