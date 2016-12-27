@@ -2,6 +2,9 @@
 	use B10g.Web, :controller
 	alias B10g.Post
 
+
+
+
 	def create(conn, %{"title" => title, "markdown" => markdown, "slug" => slug,"status" => status,"site_id" => site_id,"inserted_at" => inserted_at}) do
 		# TODO: clear this up
 		# make sure we cannot insert posts for other peoples blogs
@@ -17,7 +20,6 @@
 		  {parsed_site_id, _} = Integer.parse(site_id)
 		  parsed_site_id
 		end
-
 
     case Enum.member?(site_ids, site_id) do
       true ->

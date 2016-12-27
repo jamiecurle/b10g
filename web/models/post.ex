@@ -118,7 +118,10 @@ defmodule B10g.Post do
   def markdown(changeset) do
   	case changeset do
   		%Ecto.Changeset{valid?: true, changes: %{markdown: _markdown}} ->
-  			put_change(changeset, :body, Earmark.to_html(changeset.changes.markdown))
+  			put_change(
+  				changeset,
+  				:body,
+  				Earmark.to_html(changeset.changes.markdown, %Earmark.Options{footnotes: true}))
 			_ ->
 			changeset
   	end
