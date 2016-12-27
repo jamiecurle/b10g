@@ -14,11 +14,13 @@ let Post = {
 
     onReady(postId, socket){
 
-        let postChannel = socket.channel("posts:" + postId)
-
+        let postChannel = socket.channel("posts:" + postId);
 
         postChannel
             .on("change",  post => document.getElementById("post-body").innerHTML = post.body)
+
+        postChannel
+            .on("change",  post => document.getElementById("post-title").innerText = post.title)
 
         postChannel.join().receive("error", reason => console.log("joined failed", reason))
 

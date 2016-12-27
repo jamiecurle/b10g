@@ -210,6 +210,10 @@ var Post = {
             return document.getElementById("post-body").innerHTML = post.body;
         });
 
+        postChannel.on("change", function (post) {
+            return document.getElementById("post-title").innerText = post.title;
+        });
+
         postChannel.join().receive("error", function (reason) {
             return console.log("joined failed", reason);
         });
