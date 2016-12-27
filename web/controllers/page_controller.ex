@@ -47,7 +47,6 @@ defmodule B10g.PageController do
 
 	end
 
-
   def index(conn, _params) do
 		# get the posts
 		posts = Post
