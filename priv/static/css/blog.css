@@ -86,9 +86,6 @@ body.error main{
     border-radius: 3px;
     background-color: #fff;
 }
-div.footnotes{
-    border: 1px solid red;
-}
 #post-body div.footnotes ol{
     padding-left: 24px;
     font-size: 12px;
