@@ -1,7 +1,7 @@
 
 
 <div class="parent">
-  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>">
+  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>?mode=embed">
 
   </iframe>
   <div class="form">

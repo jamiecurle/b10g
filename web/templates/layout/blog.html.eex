@@ -28,52 +28,53 @@
     </style>
   </head>
 
+
   <body class="<%= assigns[:class] || "index" %>">
+    <%= if @conn.assigns[:current_user] && @conn.assigns[:display] == :standard do %>
+      <input type="checkbox" id="menu-toggle">
+      <div id="menu">
+        <nav>
+          <a href="/">Index</a>
+          <a href="<%= editor_path(@conn, :create) %>">Create New Post</a>
+          <a href="#">Settings</a>
 
-  <%= if @conn.assigns[:current_user] do %>
-    <input type="checkbox" id="menu-toggle">
-    <div id="menu">
-      <nav>
-        <a href="/">Index</a>
-        <a href="<%= editor_path(@conn, :create) %>">Create New Post</a>
-        <a href="#">Settings</a>
+          <%= if post do %>
+            <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit this post</a>
+          <% end %>
 
-        <%= if post do %>
-          <a href="<%= editor_path(@conn, :ui, @post.id) %>">edit this post</a>
-        <% end %>
-
-      </nav>
-    </div>
-  <% end %>
+        </nav>
+      </div>
+    <% end %>
 
     <div class="container">
-      <div id="id">
-        <p>
-          <%= if @conn.assigns[:current_user] do %>
-            <label for="menu-toggle"><%= name %></label>
-          <% else %>
-            <a href="/"><%= name %></a>
-          <% end %>
-        </p>
-      </div>
-
+      <%= if @conn.assigns[:display] == :standard do %>
+        <div id="id">
+          <p>
+            <%= if @conn.assigns[:current_user] do %>
+              <label for="menu-toggle"><%= name %></label>
+            <% else %>
+              <a href="/"><%= name %></a>
+            <% end %>
+          </p>
+        </div>
+        <% end %>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+
     </div>
 
     <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-33704475-1', 'auto');
-            ga('send', 'pageview');
-
-        </script>
+        ga('create', 'UA-33704475-1', 'auto');
+        ga('send', 'pageview');
+      </script>
   </body>
 </html>
