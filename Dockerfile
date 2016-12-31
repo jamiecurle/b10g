@@ -23,8 +23,7 @@ COPY priv /app/priv/
 RUN mix compile
 RUN mix phoenix.digest
 
-ENV PORT=8080
 
-ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
-#ENTRYPOINT mix do ecto.migrate, phoenix.server
+#ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
+CMD mix do ecto.migrate, phoenix.server
 
