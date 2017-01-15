@@ -22,8 +22,7 @@ COPY priv /app/priv/
 
 RUN mix compile
 RUN mix phoenix.digest
+RUN mix local.hex --force
 
-
-#ENTRYPOINT mix ecto.migrate && elixir --no-halt --name "b10g@`hostname -i`" --cookie "MONSTER" -S mix phoenix.server
-CMD mix do ecto.migrate, phoenix.server
+CMD ["mix", "do", "local.hex --force,ecto.migrate,phoenix.server"]
 
