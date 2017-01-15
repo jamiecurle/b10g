@@ -27,8 +27,8 @@ config :logger, :console,
 config :b10g, :aws,
   aws_bucket: "b10g",
   region: "eu-west-1",
-  access_key_id: "AKIAIKBVSQGHZY6TAHDQ",
-  secret_access_key: "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"
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
