@@ -13,9 +13,9 @@ defmodule B10g.UserPlug do
       		nil ->
       			conn
       		user_id ->
-      		 user = repo.get(B10g.User, user_id)
-      		 				|> repo.preload([:sites])
-      		 assign(conn, :current_user, user)
+      		  user = repo.get(B10g.User, user_id)
+      		   |> repo.preload([:sites])
+      		  assign(conn, :current_user, user)
       	end
       _ ->
         conn
