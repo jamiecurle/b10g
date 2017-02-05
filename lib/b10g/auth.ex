@@ -13,7 +13,7 @@ defmodule B10g.Auth do
   end
 
   def checkpw(raw, hashed_password) when @env == :test do
-    hashed_password == :crypto.hash(:md5, raw)
+    :crypto.hash(:md5, raw)
             |> Base.encode16
             |> String.downcase
   end
