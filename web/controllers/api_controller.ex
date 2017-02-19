@@ -6,8 +6,8 @@
 		# TODO: clear this up
 		# make sure we cannot insert posts for other peoples blogs
     site_ids = Enum.map(
-				Repo.preload(conn.assigns[:current_user], :sites).sites,
-				fn(site) -> site.id end)
+			Repo.preload(conn.assigns[:current_user], :sites).sites,
+			fn(site) -> site.id end)
 
 		# site id needs to be an integer
 		site_id = case is_integer(site_id) do

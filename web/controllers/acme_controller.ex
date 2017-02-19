@@ -21,5 +21,4 @@ defmodule B10g.AcmeController do
     end
     text(conn, "hello")
   end
-  
 end
