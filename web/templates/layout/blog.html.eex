@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><%= @title || @site.user.name %> </title>
+    <title><%= name <> " – " <> @title %> </title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
@@ -51,9 +51,9 @@
         <div id="id">
           <p>
             <%= if @conn.assigns[:current_user] do %>
-              <label for="menu-toggle"><%= name %></label>
+              <label for="menu-toggle"><%= {:safe,  ui_name(name)} %></label>
             <% else %>
-              <a href="/"><%= name %></a>
+              <a href="/"><%= {:safe,  ui_name(name)} %></a>
             <% end %>
           </p>
         </div>

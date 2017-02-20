@@ -208,6 +208,9 @@ div#id p{
     align-items: center;
     overflow: auto;
 }
+div#id p span{
+    display: none;
+}
 
 div#id p label,
 div#id p a{
