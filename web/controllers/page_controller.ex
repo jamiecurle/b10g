@@ -1,6 +1,6 @@
 defmodule B10g.PageController do
   use B10g.Web, :controller
-	alias B10g.Post
+  alias B10g.Post
 
   plug :put_layout, "blog.html"
 
@@ -9,53 +9,53 @@ defmodule B10g.PageController do
     |> text("k")
   end
 
-	def redirecter(conn, %{"identifer" => identifer}) do
-		# now get the post
-		post = Post
-			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
-			|> Post.get(identifer)
-			|> Repo.one
+  def redirecter(conn, %{"identifer" => identifer}) do
+    # now get the post
+    post = Post
+      |> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+      |> Post.get(identifer)
+      |> Repo.one
 
-		conn
-			|> redirect(to: page_path(conn, :detail, post.slug))
-	end
+    conn
+      |> redirect(to: page_path(conn, :detail, post.slug))
+  end
 
-	def detail(conn, %{"identifer" => identifer}) do
-		# phoenix always passes identifier through as string
-		identifer = case Integer.parse(identifer) do
-		  {integer, _string} ->
-		  	integer
-		  :error ->
-		  	identifer
-		end
+  def detail(conn, %{"identifer" => identifer}) do
+    # phoenix always passes identifier through as string
+    identifer = case Integer.parse(identifer) do
+      {integer, _string} ->
+        integer
+      :error ->
+        identifer
+    end
 
-		# now get the post
-		post = Post
-			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
-			|> Post.get(identifer)
-			|> Repo.one
+    # now get the post
+    post = Post
+      |> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+      |> Post.get(identifer)
+      |> Repo.one
 
-		case post do
-		  nil ->
-				conn
-				 |> put_layout("error.html")
-				 |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
-			post ->
-				conn
-				 |> render("detail.html", post: post, class: "detail", title: post.title)
-		end
+    case post do
+      nil ->
+        conn
+         |> put_layout("error.html")
+         |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
+      post ->
+        conn
+         |> render("detail.html", post: post, class: "detail", title: post.title)
+    end
 
-	end
+  end
 
   def index(conn, _params) do
-		# get the posts
-		posts = Post
-			|> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
-			|> order_by([p], desc: p.inserted_at)
-			|> Repo.all
+    # get the posts
+    posts = Post
+      |> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+      |> order_by([p], desc: p.inserted_at)
+      |> Repo.all
 
-		# render the page out
-		conn
-    	|> render("index.html", posts: posts, title: "All posts")
+    # render the page out
+    conn
+      |> render("index.html", posts: posts, title: "All posts")
   end
 end

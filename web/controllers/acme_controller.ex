@@ -1,5 +1,5 @@
 defmodule B10g.AcmeController do
-	use B10g.Web, :controller
+  use B10g.Web, :controller
 
   defp get_key(token) do
     # function to determine if token exist
