@@ -23,11 +23,6 @@ defmodule B10g.Router do
     post "/posts/create", APIController, :create
   end
 
-  # acme
-  scope "/.well-known", B10g do
-    get "/acme-challenge/:token", AcmeController, :validate
-  end
-
   # the editor
   scope "/editor", B10g do
     pipe_through :browser
