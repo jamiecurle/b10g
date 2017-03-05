@@ -1,6 +1,7 @@
 defmodule B10g.EditorControllerTest do
   use B10g.ConnCase
   alias B10g.Factory
+  alias B10g.Version
 
   setup %{user: user, site: site, conn: conn} do
 		# start the site server
@@ -13,7 +14,7 @@ defmodule B10g.EditorControllerTest do
 		url = editor_path(@endpoint, :ui, post.id)
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn
+		good_conn = build_conn()
 		            |> Map.put(:host, site.cname)
 
     # return the things
@@ -26,6 +27,26 @@ defmodule B10g.EditorControllerTest do
     url: url}
   end
 
+  test "when a post is saved a backup is created", %{user: user, good_conn: good_conn, post: post} do
+    # make url
+    url = editor_path(@endpoint, :update, post.id)
+
+    # make params
+    post_params = %{
+      title: "TEST",
+      slug: "test-test",
+      markdown: "*yo\n*yo",
+      status: post.status}
+
+
+	  # post to the url - 302
+	  _conn = good_conn
+					 |> assign(:current_user, user)
+					 |> put(url, post: post_params)
+
+      # we have one version
+      assert [1] == Repo.all(from v in Version, select: count(v.id))
+  end
 
 	# TODO - ensure can only get posts that belong to the site
 	test "404 on :ui if post does not belong to the site", %{user: user, good_conn: good_conn, post: post, url: url} do
@@ -134,7 +155,7 @@ defmodule B10g.EditorControllerTest do
   end
 
 	test "GET UI and not logged in redirect", %{url: url} do
-	  conn = get(build_conn, url)
+	  conn = get(build_conn(), url)
     assert redirected_to(conn) == auth_path(@endpoint, :login) <> "?next=" <> url
 	end
 end

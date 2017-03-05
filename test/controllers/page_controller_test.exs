@@ -7,7 +7,7 @@ defmodule B10g.PageControllerTest do
     B10g.SiteServer.start_link
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn
+		good_conn = build_conn()
 		            |> Map.put(:host, site.cname)
 
     {:ok,	good_conn: good_conn}

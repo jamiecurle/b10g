@@ -1,10 +1,12 @@
 defmodule B10g.EditorController do
   use B10g.Web, :controller
   alias B10g.Post
+  alias B10g.Version
   alias B10g.PostChannel
 
   plug :put_layout, "app.html"
   plug B10g.BrowserAuthPlug
+
 
   def sign(conn, _params) do
 
@@ -54,7 +56,6 @@ defmodule B10g.EditorController do
     json(conn, data)
   end
 
-
   def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
@@ -74,8 +75,12 @@ defmodule B10g.EditorController do
 
         case Repo.update(cs) do
           {:ok, post} ->
+            # save the version
+            version_cs = Version.changeset(%Version{}, %{markdown: post.markdown, post_id: post.id})
+            Repo.insert!(version_cs)
+
             # send the change
-            a = PostChannel.broadcast_change(post)
+            PostChannel.broadcast_change(post)
             # return conn
             conn
             |> redirect(to: editor_path(conn, :ui, id))

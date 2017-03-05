@@ -10,7 +10,7 @@ defmodule B10g.AuthControllerTest do
 		url = auth_path(@endpoint, :login)
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn |> Map.put(:host, site.cname)
+		good_conn = build_conn() |> Map.put(:host, site.cname)
 
     # return the things
     {:ok, user: user, site: site, good_conn: good_conn, bad_conn: conn, url: url}
@@ -25,7 +25,7 @@ defmodule B10g.AuthControllerTest do
 
 
 	test "login to a host that is not found is 404", %{url: url} do
-    assert 404 == get(build_conn, url).status
+    assert 404 == get(build_conn(), url).status
 	end
 
 	test "person A cannot login to person B's' blog", %{good_conn: good_conn, url: url} do
@@ -40,7 +40,7 @@ defmodule B10g.AuthControllerTest do
     GenServer.call(:siteserver, {:reload})
 
     # now make a conn for s2 and we can login without any issue
-    u2_conn = build_conn |> Map.put(:host, s2.cname)
+    u2_conn = build_conn() |> Map.put(:host, s2.cname)
     assert 302 == post(u2_conn, url, %{email: "a@b.c", password: "househouse"}).status
 
 	end

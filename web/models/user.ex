@@ -12,7 +12,7 @@ defmodule B10g.User do
     has_many :sites, B10g.Site
     has_many :posts, B10g.Post
 
-    timestamps
+    timestamps()
   end
 
   def changeset(model, params \\ %{}) do
@@ -39,7 +39,7 @@ defmodule B10g.User do
 		  nil ->
 				key = :crypto.hash(:md5, "#{:rand.uniform}")|> Base.encode16 |> String.downcase
 		  	put_change(changeset, :apikey,  key )
-		  apikey ->
+		  _ ->
 		  	changeset
 		end
 	end
