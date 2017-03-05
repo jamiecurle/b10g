@@ -3,12 +3,12 @@ defmodule B10g.Repo.Migrations.CreateBackup do
 
   def change do
     create table(:versions) do
-      add :blog, :binary
-      add :post, references(:posts, on_delete: :nothing)
+      add :data, :binary
+      add :post_id, references(:posts, on_delete: :nothing)
 
       timestamps()
     end
-    create index(:versions, [:post])
+    create index(:versions, [:post_id])
 
   end
 end

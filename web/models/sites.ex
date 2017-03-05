@@ -8,7 +8,7 @@ defmodule B10g.Site do
 
     belongs_to :user, B10g.User
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(cname user_id)

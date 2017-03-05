@@ -73,6 +73,8 @@ defmodule B10g.EditorController do
 
         case Repo.update(cs) do
           {:ok, post} ->
+            # save a backup
+            IO.inspect "foo"
             # send the change
             PostChannel.broadcast_change(post)
             # return conn

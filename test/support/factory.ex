@@ -78,7 +78,7 @@ defmodule B10g.Factory do
 	defp _get_user_id(params) do
 		case Map.get(params, :user_id) do
 			nil ->
-				{ok, u} = create_user()
+				{:ok, u} = create_user()
 				u.id
 			user_id ->
 				user_id
@@ -88,7 +88,7 @@ defmodule B10g.Factory do
 	defp _get_site_id(params) do
 		case Map.get(params, :site_id) do
 			nil ->
-				{ok, u} = create_site()
+				{:ok, u} = create_site()
 				u.id
 			user_id ->
 				user_id

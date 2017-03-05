@@ -18,7 +18,7 @@ defmodule B10g.Post do
     belongs_to :site, B10g.Site
     belongs_to :user, B10g.User
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(title slug markdown site_id user_id status)

@@ -1,6 +1,7 @@
 defmodule B10g.EditorControllerTest do
   use B10g.ConnCase
   alias B10g.Factory
+  alias B10g.Version
 
   setup %{user: user, site: site, conn: conn} do
 		# start the site server
@@ -26,6 +27,26 @@ defmodule B10g.EditorControllerTest do
     url: url}
   end
 
+  test "when a post is saved a backup is created", %{user: user, good_conn: good_conn, post: post} do
+    # make url
+    url = editor_path(@endpoint, :update, post.id)
+
+    # make params
+    post_params = %{
+      title: "TEST",
+      slug: "test-test",
+      markdown: "*yo\n*yo",
+      status: post.status}
+
+
+	  # post to the url - 302
+	  _conn = good_conn
+					 |> assign(:current_user, user)
+					 |> put(url, post: post_params)
+
+      # we have one version
+      assert [1] == Repo.all(from v in Version, select: count(v.id))
+  end
 
 	# TODO - ensure can only get posts that belong to the site
 	test "404 on :ui if post does not belong to the site", %{user: user, good_conn: good_conn, post: post, url: url} do
