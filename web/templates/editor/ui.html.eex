@@ -26,7 +26,7 @@
 
     <div class="form-group">
       <%= label f, :status %>
-      <%= select f, :status, post_statuses, class: "form-control" %>
+      <%= select f, :status, post_statuses(), class: "form-control" %>
     </div>
 
     <div class="form-group">

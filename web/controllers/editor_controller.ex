@@ -54,7 +54,6 @@ defmodule B10g.EditorController do
     json(conn, data)
   end
 
-
   def update(conn, %{"id" => id, "post" => post_params}) do
     # get the post
     post = Post
@@ -75,7 +74,7 @@ defmodule B10g.EditorController do
         case Repo.update(cs) do
           {:ok, post} ->
             # send the change
-            a = PostChannel.broadcast_change(post)
+            PostChannel.broadcast_change(post)
             # return conn
             conn
             |> redirect(to: editor_path(conn, :ui, id))
