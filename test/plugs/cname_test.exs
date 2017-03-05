@@ -6,7 +6,7 @@ defmodule B10g.CnamePlugTest do
     B10g.SiteServer.start_link
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn
+		good_conn = build_conn()
 		            |> Map.put(:host, site.cname)
 
     {:ok,	good_conn: good_conn, site: site}
@@ -29,7 +29,7 @@ defmodule B10g.CnamePlugTest do
   test "GET blog with non-existant cname", _params do
 
 		# build conn with host
-  	conn = build_conn
+  	conn = build_conn()
   					|> Map.put(:host, "baz.bar.foo")
   					|> get("/")
 

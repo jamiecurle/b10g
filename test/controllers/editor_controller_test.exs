@@ -13,7 +13,7 @@ defmodule B10g.EditorControllerTest do
 		url = editor_path(@endpoint, :ui, post.id)
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn
+		good_conn = build_conn()
 		            |> Map.put(:host, site.cname)
 
     # return the things
@@ -134,7 +134,7 @@ defmodule B10g.EditorControllerTest do
   end
 
 	test "GET UI and not logged in redirect", %{url: url} do
-	  conn = get(build_conn, url)
+	  conn = get(build_conn(), url)
     assert redirected_to(conn) == auth_path(@endpoint, :login) <> "?next=" <> url
 	end
 end

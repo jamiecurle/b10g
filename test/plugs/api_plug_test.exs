@@ -9,7 +9,7 @@ defmodule B10g.APIAuthPlugTest do
     url = api_path(@endpoint, :create)
 
 		# make a good_conn that is connected to this domain
-		good_conn = build_conn
+		good_conn = build_conn()
 		            |> Map.put(:host, site.cname)
 
     # send the things we need into the tests
