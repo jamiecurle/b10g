@@ -5,4 +5,3 @@ app on Heroku to serve multiple blog engines and for that reason, you can consid
 multi-tenancy.
 
 Feel free to fork this and poke it around.
-

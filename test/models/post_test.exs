@@ -4,7 +4,7 @@ defmodule B10g.PostModelTests do
     alias B10g.Post
 
     test "filter behaves as expected", %{} do
-      # make two posts
+      # make two users
       {:ok, u1} = Factory.create_user(%{email: "b@c.d"})
       {:ok, u2} = Factory.create_user(%{email: "d@c.e"})
 
