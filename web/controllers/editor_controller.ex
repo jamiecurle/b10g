@@ -7,6 +7,7 @@ defmodule B10g.EditorController do
   plug :put_layout, "app.html"
   plug B10g.BrowserAuthPlug
 
+
   def sign(conn, _params) do
 
     # get the filename
