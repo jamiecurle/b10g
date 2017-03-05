@@ -8,14 +8,20 @@ defmodule B10g.VersionTest do
   @invalid_attrs %{}
 
   test "changset automatically casts markdown to term" do
-    
-    changeset = Version.changeset(%Version{}, @valid_attrs)
-    Repo.insert(changeset)
-  end
+    # make a post
+    {:ok, post} = B10g.Factory.create_post
 
-  test "changeset with valid attributes" do
-    changeset = Version.changeset(%Version{}, @valid_attrs)
-    assert changeset.valid?
+    # make the data
+    data = Map.merge(@valid_attrs, %{post_id: post.id})
+
+    # make the changeset
+    changeset = Version.changeset(%Version{}, data)
+
+    # insert the version
+    v = Repo.insert!(changeset)
+
+    # we have the version data
+    assert v.data == <<131, 109, 0, 0, 0, 8, 194, 186, 194, 186, 194, 186, 194, 186>>
   end
 
   test "changeset with invalid attributes" do

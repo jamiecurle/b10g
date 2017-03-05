@@ -1,6 +1,7 @@
 defmodule B10g.EditorController do
   use B10g.Web, :controller
   alias B10g.Post
+  alias B10g.Version
   alias B10g.PostChannel
 
   plug :put_layout, "app.html"
@@ -73,8 +74,10 @@ defmodule B10g.EditorController do
 
         case Repo.update(cs) do
           {:ok, post} ->
-            # save a backup
-            IO.inspect "foo"
+            # save the version
+            version_cs = Version.changeset(%Version{}, %{markdown: post.markdown, post_id: post.id})
+            Repo.insert!(version_cs)
+
             # send the change
             PostChannel.broadcast_change(post)
             # return conn
