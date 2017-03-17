@@ -121,7 +121,7 @@ defmodule B10g.Post do
   			put_change(
   				changeset,
   				:body,
-  				Earmark.to_html(changeset.changes.markdown, %Earmark.Options{footnotes: true}))
+  				Earmark.as_html!(changeset.changes.markdown, %Earmark.Options{footnotes: true}))
 			_ ->
 			changeset
   	end

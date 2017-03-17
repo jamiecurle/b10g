@@ -41,7 +41,7 @@ defmodule B10g.Mixfile do
      {:timex, "~> 3.0"},
      {:timex_ecto, "~> 3.0"},
      {:comeonin, "~> 2.6"},
-     {:earmark, "~> 1.0.3"},
+     {:earmark, "~> 1.2.0"},
      {:diff, "~> 1.0.0"},
      {:aws_auth, "~> 0.6.1"},
      ]
