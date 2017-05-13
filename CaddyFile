@@ -1,0 +1,15 @@
+jc-dev.curle.io:80,
+jc-dev2.curle.io:80,
+jc-dev.curle.io:443,
+jc-dev2.curle.io:443 {
+
+  log stdout
+
+  proxy / 127.0.0.1:4000 {
+    transparent
+  }
+
+  tls {
+      dns cloudflare
+  }
+}
