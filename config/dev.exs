@@ -8,6 +8,8 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :b10g, B10g.Endpoint,
   http: [port: 4000],
+  url: [scheme: "https", host: "dev.curle.io", port: 4430],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

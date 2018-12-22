@@ -11,7 +11,7 @@ config :b10g,
 
 # Configures the endpoint
 config :b10g, B10g.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "dev.curle.io"],
   secret_key_base: "7M0j/LbcRNECYWHIuCvGlc2agE3hkP8/Q8repBaETmVXvvjb0EJYpHfj6r+HKgHt",
   render_errors: [view: B10g.ErrorView, accepts: ~w(html json)],
   pubsub: [name: B10g.PubSub,
