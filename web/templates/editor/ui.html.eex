@@ -1,7 +1,7 @@
 
 
 <div class="parent">
-  <iframe src="https://<%= @conn.assigns[:site].cname %><%= if Mix.env == :dev do %>:4430<%= end %>/<%=@post.slug %>?mode=embed">
+  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>?mode=embed">
 
   </iframe>
   <div class="form">
