@@ -1,7 +1,7 @@
 
 
 <div class="parent">
-  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>?mode=embed">
+  <iframe src="https://<%= @conn.assigns[:site].cname %><%= if Mix.env == :dev do %>:4430<%= end %>/<%=@post.slug %>?mode=embed">
 
   </iframe>
   <div class="form">
@@ -36,10 +36,8 @@
       <%= textarea f, :markdown, class: "form-control", style: "min-height: 400px" %>
     </div>
 
-
     <div class="form-group">
       <%= submit "Submit" , class: "btn btn-primary" %>
-
     </div>
 
     <% end %>
@@ -91,13 +89,16 @@
 
   // for paste event
   function handlePaste(e){
-    var blob = e.clipboardData.items[0].getAsFile();
-    switch (blob){
+    var f = e.clipboardData.items[0].getAsFile();
+    switch (f){
       case null:
         break;
       default:
-        blob.name = random_string() + ".png";
-        return handleFileUpload(blob)
+        name = random_string() + ".png";
+        f.filename = name
+
+
+        return handleFileUpload(f)
     }
   }
   // end paste events
@@ -115,7 +116,7 @@
 
   function insertPlaceholderMarkdown(file){
     // make markdown
-    let md = "![Uploading " +  file.name + "]()",
+    let md = "![Uploading " +  file.filename + "]()",
 
     // get cursor position
     cursor = $id("post_markdown").selectionEnd,
@@ -137,7 +138,7 @@
     let tmp_md = insertPlaceholderMarkdown(file),
 
     // make the final markdown
-    final_md = "![" + file.name + "](" + url_data.url + ")",
+    final_md = "![" + file.filename + "](" + url_data.url + ")",
 
     // make an xhr
     req = new XMLHttpRequest();
@@ -170,13 +171,13 @@
 
 
   function handleFileUpload(file) {
-
+      console.log(file.name)
       let req = new XMLHttpRequest();
 
       req.open("POST", "/editor/_sign/")
       req.setRequestHeader("x-csrf-token", window.csrf_token)
       req.setRequestHeader("x-post-id", window.post_id)
-      req.setRequestHeader("x-filename", file.name)
+      req.setRequestHeader("x-filename", file.filename)
       req.setRequestHeader("x-filetype", file.type)
       req.send()
       req.onreadystatechange = function(e){
