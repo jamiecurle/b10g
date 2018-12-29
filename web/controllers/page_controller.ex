@@ -54,7 +54,7 @@ defmodule B10g.PageController do
       nil ->
         conn
          |> put_layout("error.html")
-         |> put_status(:moved_permanently)
+         |> put_status(:not_found)
          |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
       post ->
         conn
