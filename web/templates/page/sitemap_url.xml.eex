@@ -4,7 +4,7 @@
     <%= for post <- @posts do %>
     <url>
         <loc>https://jamie.curle.io/<%= post.slug %></loc>
-        <lastmod><%=post.updated_at %></lastmod>
+        <lastmod><%= sitemap_time(post.updated_at) %></lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

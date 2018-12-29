@@ -9,5 +9,13 @@ defmodule B10g.PageView do
         "dates are broken"
     end
   end
+  def sitemap_time(time) do
+    case Timex.format(time, "{YYYY}-{M}-{D}") do
+      {:ok, string_time} ->
+        string_time
+      {:error, _ } ->
+        "dates are broken"
+    end
+  end
 
 end
