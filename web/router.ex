@@ -47,6 +47,7 @@ defmodule B10g.Router do
     pipe_through :browser
 
     get "/healthz", PageController, :healthz
+    get "/sitemap.xml", PageController, :sitemap
     get "/blog/:identifer", PageController, :redirecter
     get "/posts/:identifer", PageController, :redirecter
     get "/:identifer", PageController, :detail

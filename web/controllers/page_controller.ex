@@ -9,6 +9,20 @@ defmodule B10g.PageController do
     |> text("k")
   end
 
+  def sitemap(conn, _params) do
+    # this is a super quick hack to get my
+    # google mojo back. Get all the posts
+    # and spew out a sitemap.
+
+    posts = Post
+      |> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
+      |> order_by([p], desc: p.inserted_at)
+      |> Repo.all
+
+    conn
+    |> render("sitemap_url.xml", posts: posts)
+  end
+
   def redirecter(conn, %{"identifer" => identifer}) do
     # now get the post
     post = Post
@@ -17,6 +31,7 @@ defmodule B10g.PageController do
       |> Repo.one
 
     conn
+      |> put_status(:moved_permanently)
       |> redirect(to: page_path(conn, :detail, post.slug))
   end
 
@@ -39,6 +54,7 @@ defmodule B10g.PageController do
       nil ->
         conn
          |> put_layout("error.html")
+         |> put_status(:moved_permanently)
          |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
       post ->
         conn
