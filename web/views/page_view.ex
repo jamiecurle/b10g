@@ -10,7 +10,7 @@ defmodule B10g.PageView do
     end
   end
   def sitemap_time(time) do
-    case Timex.format(time, "{YYYY}-{M}-{D}") do
+    case Timex.format(time, "{YYYY}-{0M}-{0D}") do
       {:ok, string_time} ->
         string_time
       {:error, _ } ->
