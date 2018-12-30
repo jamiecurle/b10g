@@ -30,10 +30,21 @@ defmodule B10g.PageController do
       |> Post.filter(conn.assigns.site, Map.get(conn.assigns, :current_user))
       |> Post.get(identifer)
       |> Repo.one
+    
+    case post do
+      nil ->
+        conn
+         |> put_layout("error.html")
+         |> put_status(:not_found)
+         |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
 
-    conn
-      |> put_status(:moved_permanently)
-      |> redirect(to: page_path(conn, :detail, post.slug))
+      _ ->
+        conn
+          |> put_status(:moved_permanently)
+          |> redirect(to: page_path(conn, :detail, post.slug))
+
+    end
+
   end
 
   def detail(conn, %{"identifer" => identifer}) do
