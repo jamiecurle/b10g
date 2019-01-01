@@ -1,11 +1,7 @@
 
 
 <div class="parent">
-  <iframe src="https://<%= @conn.assigns[:site].cname %>/<%=@post.slug %>?mode=embed">
-
-  </iframe>
   <div class="form">
-
     <%= if @cs.action do %>
       <div class="alert alert-danger">
         <p>Oops, something went wrong! Please check the errors below.</p>

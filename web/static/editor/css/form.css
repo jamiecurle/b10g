@@ -1,24 +1,29 @@
 html,
-body{
+body,
+form,
+div.parent,
+div.form{
     height: 100%;
 }
 div.parent{
-    display: flex;
+    display: grid;
+	grid-template-columns: 2fr minmax(20ch, 80ch) 2fr;  /* oh yes, characters. hello. */
+	grid-template-areas:
+			"	.  editor 		.	";
+}
+
+div.form{
+    z-index: 400000;
+    grid-area: editor;
     height: 100%;
 }
 
-iframe, div.form{
-    width: 50%;
-    border:0 none;
+div.form form{
+    display: grid;
+    grid-gap: 5px 0;
+    grid-template-rows: 100px 100px 100px auto 120px;
 }
 
-iframe{
-    border-right: 5px solid #cacaca;
-    max-width: 720px;
-}
-div.form{
-    padding: 24px;
-}
 
 /* end layout stuff */
 textarea,
@@ -56,8 +61,9 @@ span#not-fullscreen{
     z-index: 2000;
 }
 
-
-
+textarea#post_markdown{
+    height: 95%;
+}
 
 textarea#post_markdown.fullscreen{
     font-size: 16px;
