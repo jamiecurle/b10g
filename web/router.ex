@@ -51,7 +51,8 @@ defmodule B10g.Router do
     get "/sitemap_index.xml", PageController, :sitemap
     get "/blog/:identifer", PageController, :redirecter
     get "/posts/:identifer", PageController, :redirecter
-    get "/:identifer", PageController, :detail
+    get "/:identifer", PageController, :redirecter
+    get "/archive/:identifer", PageController, :detail
     get "/", PageController, :index
   end
 
