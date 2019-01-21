@@ -70,6 +70,7 @@ defmodule B10g.PageController do
          |> render(B10g.ErrorView, "404.html", class: "error", title: "Not Found")
       post ->
         conn
+         |> put_resp_header("Link", "<https://jamie.curle.io/archive/" <> post.slug <> ">; rel=\"canonical\"") 
          |> render("detail.html", post: post, class: "detail", title: post.title)
     end
 
