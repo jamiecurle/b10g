@@ -187,7 +187,7 @@
       req.open("POST", "/editor/_sign/")
       req.setRequestHeader("x-csrf-token", window.csrf_token)
       req.setRequestHeader("x-post-id", window.post_id)
-      req.setRequestHeader("x-filename", file.filename)
+      req.setRequestHeader("x-filename", name)
       req.setRequestHeader("x-filetype", file.type)
       req.send()
       req.onreadystatechange = function(e){
