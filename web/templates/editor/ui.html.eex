@@ -167,7 +167,21 @@
 
 
   function handleFileUpload(file) {
+      //var name =  file.filename === 'image.png' ? file.name : file.filename
+      if (file.name === 'image.png'){
+        name = file.filename
+        console.log("pasted file")
+      }else{
+        name = file.name
+        console.log("dragged file")
+      }
       console.log(file.name)
+
+      // filename is used by the pasted image and name is used by dragged
+      // and dropped images.  make this consistent otherwise we will end up
+      // with images called undefined and that's just clown shoes.
+
+      // all done.
       let req = new XMLHttpRequest();
 
       req.open("POST", "/editor/_sign/")
