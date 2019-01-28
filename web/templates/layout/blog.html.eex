@@ -16,7 +16,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Jamie Curle">
+    <meta content="Jamie Curle" property="og:title">
+    <meta content="Jamie Curle&#39;s documented journey of his mission to become a well rounded human being" name="description">
+    <meta content="Jamie Curle&#39;s documented journey of his mission to become a well rounded human being" property="og:description">
+    <meta content="https://jamiecurle.com/images/ogimage.png" property="og:image">
+    <meta content="https://jamiecurle.com/images/ogimage.png" property="twitter:card">
 
     <title><%= name <> " – " <> @title %> </title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/blog.css") %>">
