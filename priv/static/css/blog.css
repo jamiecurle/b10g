@@ -226,7 +226,11 @@ div#id p a{
     border-radius: 50px;
     text-decoration: none;
 }
-div.index span{
+div.about{
+    padding: 12px;
+    margin: 12px;
+}
+div.post span{
     font-style: italic;
     font-size: 10px;
     text-transform: uppercase;

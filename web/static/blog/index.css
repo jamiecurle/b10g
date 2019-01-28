@@ -1,4 +1,8 @@
-div.index span{
+div.about{
+    padding: 12px;
+    margin: 12px;
+}
+div.post span{
     font-style: italic;
     font-size: 10px;
     text-transform: uppercase;

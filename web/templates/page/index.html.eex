@@ -1,6 +1,15 @@
 <div class="index">
+  <div class="about" itemscope itemtype="http://schema.org/Person">
+    <h1 itemprop="name">Jamie Curle </h1>
+    <p itemprop="description">
+     Hello, I'm on a mission <span itemprop="disambiguatingDescription">
+     to be a well rounded human being</span> and this is my blog. At some
+     point in November of 2018 I decided to start 134 days of Keto and
+     weight training. I post here daily.
+    </p>
+  </div>
   <%= for post <- @posts do %>
-    <div class="<%= post.status %>">
+    <div class="post <%= post.status %>">
       <p>
         <a href="<%= page_path(@conn, :detail, post.slug) %>">
           <%= if post.title do %>
