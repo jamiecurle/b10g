@@ -8,12 +8,12 @@
      weight training. I post here daily.
     </p>
     <p>
-      You can also find me 
-      <a href="https://github.com/jamiecurle">github,
-      <a href="https://twitter.com/jamiecurle">twitter</a>,
-      <a href="https://www.linkedin.com/in/jamie-curle-67131190/">linkedin</a>
+      You can also find me on 
+      <a href="https://github.com/jamiecurle">Github,
+      <a href="https://twitter.com/jamiecurle">Twitter</a>,
+      <a href="https://www.linkedin.com/in/jamie-curle-67131190/">Linkedin</a>
       and
-      <a href="https://keybase.io/jamiecurle">keybase</a>.
+      <a href="https://keybase.io/jamiecurle">Keybase</a>.
     </p>
   </div>
   <%= for post <- @posts do %>
