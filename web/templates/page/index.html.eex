@@ -7,6 +7,14 @@
      point in November of 2018 I decided to start 134 days of Keto and
      weight training. I post here daily.
     </p>
+    <p>
+      You can also find me 
+      <a href="https://github.com/jamiecurle">github,
+      <a href="https://twitter.com/jamiecurle">twitter</a>,
+      <a href="https://www.linkedin.com/in/jamie-curle-67131190/">linkedin</a>
+      and
+      <a href="https://keybase.io/jamiecurle">keybase</a>.
+    </p>
   </div>
   <%= for post <- @posts do %>
     <div class="post <%= post.status %>">
