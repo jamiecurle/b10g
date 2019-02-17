@@ -39,6 +39,7 @@ lightbox_show = function(e){
 
 
 // when the lightbox image is clicked, close the light box
+document.querySelectorAll('#lightbox')[0].addEventListener('click', lightbox_hide);
 document.querySelectorAll('#lightbox img')[0].addEventListener('click', lightbox_hide);
 document.addEventListener('keydown', lightbox_hide, false);
 
