@@ -22,6 +22,8 @@
 
 
 <script>
+// todo: keycodes - 37 is previous, 39 is next. Cycle through
+//       the images and allow keyboard navigation.
 ismobile = function() {
    if(window.innerWidth <= 600 && window.innerHeight <= 800) {
      return true;
@@ -55,7 +57,6 @@ document.addEventListener('keydown', lightbox_hide, false);
 
 // add event listeners, to open the lightbox when the inline image is clicked
 // but only if this is not a mobile.
-console.log(ismobile())
 if (! ismobile() ){
   var images = [...document.querySelectorAll("#post-body img")].map(img => {
     img.addEventListener('click', lightbox_show);
