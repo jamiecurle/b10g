@@ -12,6 +12,9 @@
 </div>
 
 <div id="lightbox">
+  <div class="control">
+    <a href="#"> <span>&times;</span></a>
+  </div>
   <div>
     <img>
   </div>
@@ -19,12 +22,21 @@
 
 
 <script>
+// todo: keycodes - 37 is previous, 39 is next. Cycle through
+//       the images and allow keyboard navigation.
+ismobile = function() {
+   if(window.innerWidth <= 600 && window.innerHeight <= 800) {
+     return true;
+   } else {
+     return false;
+   }
+}
 
 // hide the light box when the lightbox image is clicked
 lightbox_hide = function(e){
     // if keydown and escape or a click
     if ( (e.type == "keydown" && e.keyCode == 27) || e.type == "click"){
-      console.debug("lightbox hide")
+      console.debug("lightbox hide");
       document.getElementById("lightbox").style.display = 'none';
     }
 
@@ -32,19 +44,23 @@ lightbox_hide = function(e){
 
 // show the lightbox when the inline image is shown
 lightbox_show = function(e){
-  console.debug("lightbox show")
+  console.debug("lightbox show");
   document.querySelectorAll('#lightbox img')[0].src = e.target.src;
   document.getElementById("lightbox").style.display = 'block';
 }
 
 
 // when the lightbox image is clicked, close the light box
+document.querySelectorAll('#lightbox')[0].addEventListener('click', lightbox_hide);
 document.querySelectorAll('#lightbox img')[0].addEventListener('click', lightbox_hide);
 document.addEventListener('keydown', lightbox_hide, false);
 
 // add event listeners, to open the lightbox when the inline image is clicked
-var images = [...document.querySelectorAll("#post-body img")].map(img => {
-  img.addEventListener('click', lightbox_show)
-});
+// but only if this is not a mobile.
+if (! ismobile() ){
+  var images = [...document.querySelectorAll("#post-body img")].map(img => {
+    img.addEventListener('click', lightbox_show);
+  });
+}
 
 </script>
