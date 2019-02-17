@@ -312,7 +312,7 @@ and (max-device-width : 667px) {
         padding: 12px;
         margin: 12px;
     }
-    main div.index a{
+    main div.index div.posts a{
         padding: 12px;
         margin: 12px;
     }
