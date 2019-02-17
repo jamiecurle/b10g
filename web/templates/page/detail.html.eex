@@ -10,3 +10,37 @@
 <div data-id="<%= @post.id %>" id="post-body">
   <%= raw @post.body %>
 </div>
+
+<div id="lightbox">
+  <div>
+    <img>
+  </div>
+</div>
+
+
+<script>
+
+// hide the light box when the lightbox image is clicked
+lightbox_hide = function(e){
+  console.debug("lightbox hide")
+  document.getElementById("lightbox").style.display = 'none';
+
+};
+
+// show the lightbox when the inline image is shown
+lightbox_show = function(e){
+  console.debug("lightbox show")
+  document.querySelectorAll('#lightbox img')[0].src = e.target.src;
+  document.getElementById("lightbox").style.display = 'block';
+}
+
+
+// when the lightbox image is clicked, close the light box
+document.querySelectorAll('#lightbox img')[0].addEventListener('click', lightbox_hide);
+
+// add event listeners, to open the lightbox when the inline image is clicked
+var images = [...document.querySelectorAll("#post-body img")].map(img => {
+  img.addEventListener('click', lightbox_show)
+});
+
+</script>
