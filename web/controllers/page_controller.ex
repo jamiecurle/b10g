@@ -9,6 +9,11 @@ defmodule B10g.PageController do
     |> text("k")
   end
 
+  def reap(conn, _params) do
+    conn
+    |> redirect(external: "https://jamiecurle.com")
+  end
+
 
   def sitemap(conn, _params) do
     # this is a super quick hack to get my

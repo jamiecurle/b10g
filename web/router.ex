@@ -18,6 +18,17 @@ defmodule B10g.Router do
     plug B10g.APIAuthPlug
   end
 
+	# the blog views
+  scope "/", B10g do
+    pipe_through :browser
+
+    get "/:whatever", PageController, :reap
+    get "/", PageController, :reap
+
+    get "/archive/:identifer", PageController, :detail
+    get "/", PageController, :index
+  end
+
   scope "/api", B10g do
     pipe_through :api
     post "/posts/create", APIController, :create
@@ -42,16 +53,5 @@ defmodule B10g.Router do
     get "/login", AuthController, :login
   end
 
-	# the blog views
-  scope "/", B10g do
-    pipe_through :browser
-
-    get "/healthz", PageController, :healthz
-    get "/sitemap.xml", PageController, :sitemap
-    get "/sitemap_index.xml", PageController, :sitemap
-    #get "/:identifer", PageController, :redirecter
-    get "/archive/:identifer", PageController, :detail
-    get "/", PageController, :index
-  end
 
 end
